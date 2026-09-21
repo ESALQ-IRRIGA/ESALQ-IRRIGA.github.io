@@ -208,7 +208,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     <p class="hint">Comprimento, rugosidade e perda de carga só aparecem na primeira equação — deixe no máximo um dos três em branco. Vazão, velocidade e diâmetro podem ficar em qualquer combinação.</p>
     <div class="grid" id="campos">
       <div class="field" data-k="Q">
-        <label for="f-Q"><span class="sym">Q</span> Vazão <span class="un">L/s</span></label>
+        <label for="f-Q"><span class="sym">Q</span> Vazão <span class="un">m³/s</span></label>
         <input id="f-Q" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
         <span class="desc">Vazão que passa pela tubulação.</span>
       </div>
@@ -294,7 +294,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   var ok = document.getElementById("res-ok");
 
   var META = {
-    Q:{nome:"Vazão", un:"L/s", dec:3},
+    Q:{nome:"Vazão", un:"m³/s", dec:3},
     V:{nome:"Velocidade", un:"m/s", dec:3},
     D:{nome:"Diâmetro interno", un:"mm", dec:2},
     L:{nome:"Comprimento", un:"m", dec:2},
@@ -405,7 +405,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
     // unidades de trabalho: Q em m³/s, D em m
     var v = {
-      Q: def(vals.Q) ? vals.Q/1000 : undefined,
+      Q: def(vals.Q) ? vals.Q : undefined,
       V: vals.V,
       D: def(vals.D) ? vals.D/1000 : undefined,
       L: vals.L, R: vals.R, H: vals.H
@@ -472,7 +472,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   function falha(t){ caixa.className = "result error"; ok.hidden = true; msg.hidden = false; msg.textContent = t; }
 
   function exibe(k, v){
-    if(k === "Q") return {val:v.Q*1000, un:"L/s"};
+    if(k === "Q") return {val:v.Q, un:"m³/s"};
     if(k === "D") return {val:v.D*1000, un:"mm"};
     if(k === "R") return {val:v.R, un:""};
     return {val:v[k], un:META[k].un};
@@ -502,7 +502,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     document.getElementById("res-form").innerHTML = "";
 
     var itens = [
-      ["Vazão", fmt(v.Q*1000,3)+" L/s"],
+      ["Vazão", fmt(v.Q,3)+" m³/s"],
       ["Velocidade", fmt(v.V,3)+" m/s"],
       ["Diâmetro", fmt(v.D*1000,2)+" mm"],
       ["hf total", fmt(v.H,3)+" m"],
@@ -542,7 +542,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   ORDEM.forEach(function(k){ EL[k].addEventListener("input", calcula); });
 
   document.getElementById("btn-ex").addEventListener("click", function(){
-    EL.Q.value = 14; EL.L.value = 100;
+    EL.Q.value = 0.014; EL.L.value = 100;
     EL.R.value = (metodo === "hw") ? 150 : 0.000135;
     EL.H.value = (metodo === "hw") ? 9.545 : 9.523;
     EL.D.value = ""; EL.V.value = "";
@@ -556,7 +556,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     EL.Q.focus();
   });
 
-  EL.Q.value = 14; EL.L.value = 100; EL.R.value = 150; EL.H.value = 9.545;
+  EL.Q.value = 0.014; EL.L.value = 100; EL.R.value = 150; EL.H.value = 9.545;
   EL.D.value = ""; EL.V.value = "";
   calcula();
 })();
