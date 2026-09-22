@@ -64,6 +64,8 @@ header p{margin:0;color:var(--ink-soft);font-size:.94rem;max-width:64ch}
 
 .card{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:20px;margin-bottom:18px}
 .card h2{font-size:.98rem;font-weight:600;margin:0 0 4px}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
+.card-top h2{margin:0}
 .card .hint{margin:0 0 16px;color:var(--ink-soft);font-size:.86rem;max-width:64ch}
 
 .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
@@ -229,7 +231,10 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 <div id="painel" role="tabpanel">
 
   <div class="card">
-    <h2>Variáveis</h2>
+    <div class="card-top">
+      <h2>Variáveis</h2>
+      <button class="act" id="btn-limpa" title="Apaga todos os campos para começar outro cálculo">Novo cálculo</button>
+    </div>
     <p class="hint">Comprimento, rugosidade e perda de carga só aparecem na primeira equação — deixe no máximo um dos três em branco. Vazão, velocidade e diâmetro podem ficar em qualquer combinação.</p>
     <div class="grid" id="campos">
       <div class="field" data-k="Q">
@@ -279,10 +284,6 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     </div>
   </div>
 
-  <div class="toolbar">
-    <button class="act" id="btn-ex">Carregar exemplo da planilha</button>
-    <button class="act" id="btn-limpa">Limpar campos</button>
-  </div>
 </div>
 
 <div class="creditos">
@@ -478,6 +479,10 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     if(invalido){ falha("O valor de " + META[invalido].nome.toLowerCase() + " não é um número válido."); return; }
     var ruim = Object.keys(vals).find(function(k){ return vals[k] <= 0; });
     if(ruim){ falha("Todos os valores precisam ser maiores que zero: revise " + META[ruim].nome.toLowerCase() + "."); return; }
+    if(vazios.length === ORDEM.length){
+      neutro("Preencha os dados que você conhece e deixe em branco o que quer calcular (até dois campos).");
+      return;
+    }
     if(vazios.length > 2){
       neutro("Deixe no máximo dois campos vazios. Agora há " + vazios.length + ".");
       return;
@@ -615,8 +620,6 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       var mp = maisProximo(v.R);
       notas.push("Material com coeficiente mais próximo: " + mp[0] + " (" + MET[metodo].sym + " = " + vFmt(mp[1]) + ").");
     }
-    if(v.V > 3) notas.push("Velocidade acima de 3 m/s: costuma ser alta demais para tubulação de recalque.");
-    else if(v.V < 0.5) notas.push("Velocidade abaixo de 0,5 m/s: risco de sedimentação.");
     if(!notas.length) caixa.style.display = "none";
     notas.forEach(function(t){
       var p = document.createElement("div");
@@ -648,14 +651,6 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     });
   });
 
-  document.getElementById("btn-ex").addEventListener("click", function(){
-    EL.Q.value = 0.014; EL.L.value = 100;
-    EL.R.value = (metodo === "hw") ? 150 : 0.000135;
-    EL.H.value = (metodo === "hw") ? 9.545 : 9.523;
-    EL.D.value = ""; EL.V.value = "";
-    calcula();
-    EL.D.focus();
-  });
 
   document.getElementById("btn-limpa").addEventListener("click", function(){
     ORDEM.forEach(function(k){ EL[k].value = ""; });
@@ -664,8 +659,6 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   });
 
   montaSel();
-  EL.Q.value = 0.014; EL.L.value = 100; EL.R.value = 150; EL.H.value = 9.545;
-  EL.D.value = ""; EL.V.value = "";
   calcula();
 })();
 
@@ -726,27 +719,8 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     try{ localStorage.setItem("ei-tema", novo); }catch(e){}
   });
 
-  /* guarda os últimos valores digitados */
-  var chaves = ["Q","V","D","L","R","H"];
-  function els(){ return chaves.map(function(k){ return document.getElementById("f-"+k); }); }
-  try{
-    var salvo = JSON.parse(localStorage.getItem("ei-valores") || "null");
-    if(salvo && salvo.v){
-      if(salvo.m === "fl") document.getElementById("tab-fl").click();
-      chaves.forEach(function(k,i){ var el = document.getElementById("f-"+k); if(el) el.value = salvo.v[i] || ""; });
-      document.getElementById("f-Q").dispatchEvent(new Event("input"));
-    }
-  }catch(e){}
-  function guarda(){
-    try{
-      var m = document.getElementById("tab-fl").getAttribute("aria-selected") === "true" ? "fl" : "hw";
-      localStorage.setItem("ei-valores", JSON.stringify({m:m, v: els().map(function(el){ return el.value; })}));
-    }catch(e){}
-  }
-  els().forEach(function(el){ el.addEventListener("input", guarda); });
-  ["tab-hw","tab-fl","btn-ex","btn-limpa"].forEach(function(id){
-    var b = document.getElementById(id); if(b) b.addEventListener("click", function(){ setTimeout(guarda, 0); });
-  });
+  /* o app sempre abre em branco; apaga valores guardados por versões anteriores */
+  try{ localStorage.removeItem("ei-valores"); }catch(e){}
 })();
 </script>
 
