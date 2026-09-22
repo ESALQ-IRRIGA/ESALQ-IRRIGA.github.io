@@ -479,9 +479,11 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     var cand = ORDEM.filter(function(c){
       return c !== pend && brancos.indexOf(c) < 0 && combValida(brancos.concat(c));
     });
-    document.getElementById("esc-sub").textContent = cand.length
-      ? "Qual variável deve ser recalculada com o novo valor?"
-      : "Nenhuma variável pode ser recalculada nessa combinação. Desfaça a alteração ou apague um campo.";
+    document.getElementById("esc-sub").textContent = !cand.length
+      ? "Nenhuma variável pode ser recalculada nessa combinação. Desfaça a alteração ou apague um campo."
+      : brancos.length
+        ? nomeVar(brancos[0]) + " continua sendo calculado. Qual outra variável deve ser recalculada junto?"
+        : "Qual variável deve ser recalculada com o novo valor?";
     var ops = document.getElementById("esc-ops");
     ops.innerHTML = cand.map(function(c){
       return '<button type="button" class="esc" data-k="'+c+'"><span class="sym">'+simbVar(c)+'</span>'+NOVO[c]()+'</button>';
@@ -502,6 +504,17 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       else if(pend === k && !tem) pend = null;
       calcula();
     };
+  }
+
+  // J = hf/L: mostrado sempre que L e hf forem conhecidos
+  function mostraJ(val){
+    var FJ = document.getElementById("campo-J"), IJ = document.getElementById("f-J");
+    IJ.placeholder = fmt(val,5);
+    FJ.classList.add("unknown","calc");
+    var bJ = FJ.querySelector(".badge");
+    if(!bJ){ bJ = document.createElement("span"); bJ.className = "badge"; FJ.appendChild(bJ); }
+    bJ.textContent = "calculado";
+    bJ.style.top = (IJ.offsetTop + IJ.offsetHeight/2) + "px";
   }
 
   function calcula(){
@@ -531,6 +544,8 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       else if(!isInc && b) b.remove();
       if(isInc){ var inp = EL[f.dataset.k]; b.textContent = "incógnita"; b.style.top = (inp.offsetTop + inp.offsetHeight/2) + "px"; }
     });
+
+    if(def(vals.L) && def(vals.H) && vals.L > 0 && vals.H > 0) mostraJ(vals.H/vals.L);
 
     if(invalido){ falha("O valor de " + META[invalido].nome.toLowerCase() + " não é um número válido."); return; }
     var ruim = Object.keys(vals).find(function(k){ return vals[k] <= 0; });
@@ -660,11 +675,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
     document.getElementById("res-form").innerHTML = "";
 
-    var FJ = document.getElementById("campo-J"), IJ = document.getElementById("f-J");
-    IJ.placeholder = fmt(v.H/v.L,5);
-    FJ.classList.add("unknown","calc");
-    var bJ = document.createElement("span"); bJ.className = "badge"; bJ.textContent = "calculado"; FJ.appendChild(bJ);
-    bJ.style.top = (IJ.offsetTop + IJ.offsetHeight/2) + "px";
+    mostraJ(v.H/v.L);
     var itens = [];
     var dl = document.getElementById("res-der");
     dl.innerHTML = itens.map(function(p){
