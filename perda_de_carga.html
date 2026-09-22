@@ -77,6 +77,17 @@ input[type=number]{
   padding:10px 11px;border:1px solid var(--line);border-radius:2px;
   background:var(--paper);color:var(--ink);width:100%;
 }
+select.mat{
+  font:500 .9rem/1.3 "IBM Plex Sans",system-ui,sans-serif;
+  padding:9px 30px 9px 11px;border:1px solid var(--line);border-radius:2px;
+  background-color:var(--surface);color:var(--ink);width:100%;cursor:pointer;
+  appearance:none;-webkit-appearance:none;
+  background-image:linear-gradient(45deg,transparent 50%,var(--ink-soft) 50%),linear-gradient(135deg,var(--ink-soft) 50%,transparent 50%);
+  background-position:calc(100% - 16px) 50%,calc(100% - 11px) 50%;background-size:5px 5px;background-repeat:no-repeat;
+  text-overflow:ellipsis;
+}
+select.mat:focus{outline:2px solid var(--water);outline-offset:-1px;border-color:var(--water)}
+.field.mat-field{grid-column:1/-1}
 input:focus{outline:2px solid var(--water);outline-offset:-1px;border-color:var(--water)}
 .field.unknown input{background:var(--solve-bg);border-color:var(--solve)}
 .field.unknown label{padding-right:76px}
@@ -227,10 +238,11 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
         <input id="f-L" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
         <span class="desc">Extensão do trecho de tubulação.</span>
       </div>
-      <div class="field" data-k="R">
+      <div class="field mat-field" data-k="R">
         <label for="f-R"><span class="sym" id="sym-R">C</span> <span id="nome-R">Coef. C</span> <span class="un" id="un-R">adimensional</span></label>
+        <select id="sel-R" class="mat" aria-label="Material da tubulação"></select>
         <input id="f-R" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
-        <span class="desc" id="desc-R">Coeficiente de Hazen-Williams: 150 para PVC, 130 para ferro fundido novo, 100 para usado.</span>
+        <span class="desc" id="desc-R">Escolha o material para preencher o coeficiente, ou digite outro valor. Deixe em branco para calculá-lo.</span>
       </div>
       <div class="field" data-k="H">
         <label for="f-H"><span class="sym">hf</span> Perda de carga <span class="un">m</span></label>
@@ -273,17 +285,39 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   var MET = {
     hw: {
       nome:"Hazen-Williams", a:1.852, m:4.87, sym:"C", rotulo:"Coeficiente C", un:"adimensional",
-      desc:"Coeficiente de Hazen-Williams: 150 para PVC, 130 para ferro fundido novo, 100 para usado.",
+      desc:"Escolha o material para preencher o coeficiente C, ou digite outro valor. Deixe em branco para calculá-lo.",
       k:function(R){ return 10.65/Math.pow(R,1.852); },
       rug:function(Q,L,D,hf){ return Q*Math.pow(10.65*L/(hf*Math.pow(D,4.87)),1/1.852); }
     },
     fl: {
       nome:"Flamant", a:1.75, m:4.75, sym:"b", rotulo:"Coeficiente b", un:"adimensional",
-      desc:"Coeficiente de Flamant: 0,000135 para PVC, 0,00023 para ferro fundido.",
+      desc:"Escolha o material para preencher o coeficiente b, ou digite outro valor. Deixe em branco para calculá-lo.",
       k:function(R){ return 6.107*R; },
       rug:function(Q,L,D,hf){ return hf*Math.pow(D,4.75)/(6.107*Math.pow(Q,1.75)*L); }
     }
   };
+
+  var MAT = {
+    hw: [
+      ["Plástico, polietileno (PE), PVC", 150],
+      ["Latão, cobre, chumbo, estanho, chapas de ferro estanhado novos, cimento amianto, mangueiras de tecido revestidas de borracha de boa qualidade", 140],
+      ["Alumínio", 135],
+      ["Aço galvanizado, concreto de acabamento liso, ferro fundido e aço revestidos de cimento liso novos, ferro fundido novo", 130],
+      ["Ferro galvanizado", 125],
+      ["Alumínio c/ juntas de acoplamento rápido, manilha de argila comum p/ drenos", 120],
+      ["Manilhas de ferro para esgoto", 110],
+      ["Alvenaria de tijolos revestido de cimento liso", 100],
+      ["Tubos corrugados", 60]
+    ],
+    fl: [
+      ["Ferro ou aço usado", 0.00023],
+      ["Ferro ou aço novo", 0.000185],
+      ["Concreto", 0.000185],
+      ["PVC e polietileno", 0.000135],
+      ["Chumbo", 0.000140]
+    ]
+  };
+  var PADRAO = { hw: 0, fl: 3 };   // PVC em cada método
 
   var ORDEM = ["Q","V","D","L","R","H"];
   var EL = {};
@@ -292,6 +326,34 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   var caixa = document.getElementById("resultado");
   var msg = document.getElementById("msg");
   var ok = document.getElementById("res-ok");
+  var SEL = document.getElementById("sel-R");
+
+  function vFmt(x){ return String(x).replace(".", ","); }
+  function montaSel(){
+    var M = MET[metodo];
+    SEL.innerHTML = '<option value="">Outro valor (digite abaixo) ou deixe em branco para calcular</option>' +
+      MAT[metodo].map(function(m, i){
+        return '<option value="'+i+'">'+m[0]+' — '+M.sym+' = '+vFmt(m[1])+'</option>';
+      }).join("");
+  }
+  function igual(a, b){ return Math.abs(a - b) <= 1e-9*Math.max(Math.abs(a), Math.abs(b)); }
+  function sincSel(){
+    var r = num(EL.R), lista = MAT[metodo], atual = SEL.value;
+    if(r === null || isNaN(r)){ SEL.value = ""; return; }
+    if(atual !== "" && igual(lista[+atual][1], r)) return;   // mantém a escolha (ex.: Concreto x Ferro novo)
+    var i = lista.findIndex(function(m){ return igual(m[1], r); });
+    SEL.value = i >= 0 ? String(i) : "";
+  }
+  function maisProximo(r){
+    var lista = MAT[metodo], best = 0;
+    lista.forEach(function(m, i){ if(Math.abs(m[1]-r) < Math.abs(lista[best][1]-r)) best = i; });
+    return lista[best];
+  }
+  SEL.addEventListener("change", function(){
+    if(SEL.value === ""){ EL.R.focus(); return; }
+    EL.R.value = MAT[metodo][+SEL.value][1];
+    EL.R.dispatchEvent(new Event("input"));
+  });
 
   var META = {
     Q:{nome:"Vazão", un:"m³/s", dec:6},
@@ -371,6 +433,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   }
 
   function calcula(){
+    sincSel();
     var vazios = [], vals = {}, invalido = null;
     ORDEM.forEach(function(k){
       var x = num(EL[k]);
@@ -514,6 +577,10 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     }).join("");
 
     var notas = checks.slice();
+    if(resolvidas.indexOf("R") >= 0){
+      var mp = maisProximo(v.R);
+      notas.push("Material com coeficiente mais próximo: " + mp[0] + " (" + MET[metodo].sym + " = " + vFmt(mp[1]) + ").");
+    }
     if(v.V > 3) notas.push("Velocidade acima de 3 m/s: costuma ser alta demais para tubulação de recalque.");
     else if(v.V < 0.5) notas.push("Velocidade abaixo de 0,5 m/s: risco de sedimentação.");
     notas.forEach(function(t){
@@ -532,7 +599,8 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     document.getElementById("nome-R").textContent = "Coef. " + M.sym;
     document.getElementById("un-R").textContent = M.un;
     document.getElementById("desc-R").textContent = M.desc;
-    if(EL.R.value !== ""){ EL.R.value = (m === "hw") ? 150 : 0.000135; }
+    montaSel();
+    if(EL.R.value !== ""){ EL.R.value = MAT[m][PADRAO[m]][1]; SEL.value = String(PADRAO[m]); }
     calcula();
   }
 
@@ -555,6 +623,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     EL.Q.focus();
   });
 
+  montaSel();
   EL.Q.value = 0.014; EL.L.value = 100; EL.R.value = 150; EL.H.value = 9.545;
   EL.D.value = ""; EL.V.value = "";
   calcula();
