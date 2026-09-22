@@ -132,6 +132,19 @@ input:focus{outline:2px solid var(--water);outline-offset:-1px;border-color:var(
 .derived dd{margin:0;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:1.02rem}
 .nota{margin-top:12px;font-size:.84rem;color:var(--solve);line-height:1.45}
 
+.escolha{margin:18px 0 0;padding:14px 16px;border:1px solid var(--solve);border-left:4px solid var(--solve);
+  background:var(--solve-bg);border-radius:3px}
+.escolha p{margin:0 0 2px;font-size:.9rem}
+.escolha .esc-tit{font-weight:600}
+.esc-ops{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+button.esc{font:500 .9rem/1.2 inherit;font-family:inherit;cursor:pointer;padding:9px 13px;
+  border:1px solid var(--solve);background:var(--surface);color:var(--ink);border-radius:2px}
+button.esc .sym{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--solve);margin-right:6px}
+button.esc:hover{background:var(--solve);color:var(--surface)}
+button.esc:hover .sym{color:var(--surface)}
+button.esc.desfaz{border-color:var(--line);color:var(--ink-soft)}
+button.esc.desfaz:hover{background:transparent;border-color:var(--ink-soft);color:var(--ink)}
+button.esc:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
 button.act{
   font:500 .9rem/1 inherit;font-family:inherit;cursor:pointer;padding:10px 15px;
@@ -240,22 +253,20 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       <div class="field" data-k="Q">
         <label for="f-Q"><span class="sym">Q</span> Vazão <span class="un">m³/s</span></label>
         <input id="f-Q" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
-        <span class="desc">Vazão que passa pela tubulação.</span>
       </div>
       <div class="field" data-k="V">
         <label for="f-V"><span class="sym">V</span> Velocidade <span class="un">m/s</span></label>
         <input id="f-V" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
-        <span class="desc">Velocidade média do escoamento. Usual entre 0,5 e 2,5 m/s.</span>
+        <span class="desc">Velocidade média do escoamento.</span>
       </div>
       <div class="field" data-k="D">
         <label for="f-D"><span class="sym">D</span> Diâmetro interno <span class="un">mm</span></label>
         <input id="f-D" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
-        <span class="desc">Diâmetro teórico; arredonde depois para o comercial acima.</span>
+        <span class="desc">Diâmetro teórico; adote o diâmetro comercial imediatamente superior e atualize a perda de carga.</span>
       </div>
       <div class="field" data-k="L">
         <label for="f-L"><span class="sym">L</span> Comprimento <span class="un">m</span></label>
         <input id="f-L" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
-        <span class="desc">Extensão do trecho de tubulação.</span>
       </div>
       <div class="field mat-field" data-k="R">
         <label for="f-R"><span class="sym" id="sym-R">C</span> <span id="nome-R">Coef. C</span> <span class="un" id="un-R">adimensional</span></label>
@@ -266,13 +277,17 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       <div class="field" data-k="H">
         <label for="f-H"><span class="sym">hf</span> Perda de carga <span class="un">m</span></label>
         <input id="f-H" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
-        <span class="desc">Perda contínua no trecho.</span>
       </div>
       <div class="field" data-k="J" id="campo-J">
         <label for="f-J"><span class="sym">J</span> Perda unitária <span class="un">m/m</span></label>
         <input id="f-J" class="num" type="text" readonly tabindex="-1" placeholder="—" aria-live="polite">
-        <span class="desc">Perda por metro de tubulação, J = hf / L. Sempre calculada.</span>
+        <span class="desc">Perda de carga unitária.</span>
       </div>
+    </div>
+    <div class="escolha" id="escolha" hidden aria-live="polite">
+      <p class="esc-tit" id="esc-tit"></p>
+      <p id="esc-sub">Qual variável deve ser recalculada com o novo valor?</p>
+      <div class="esc-ops" id="esc-ops"></div>
     </div>
     <div class="result empty" id="resultado" aria-live="polite">
       <p class="msg" id="msg">Deixe em branco o que você quer descobrir.</p>
@@ -451,8 +466,64 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     }
   }
 
+  // ---- alteração de um valor calculado: o usuário escolhe o que recalcular ----
+  var calcAnt = [];   // variáveis calculadas no último resultado
+  var pend = null;    // variável calculada que o usuário acabou de sobrescrever
+  var ESC = document.getElementById("escolha");
+  var SIMB = {Q:"Q", V:"V", D:"D", L:"L", H:"hf"};
+  function nomeVar(k){ return k === "R" ? MET[metodo].rotulo : META[k].nome; }
+  function simbVar(k){ return k === "R" ? MET[metodo].sym : SIMB[k]; }
+  var NOVO = {
+    Q:function(){ return "Nova vazão"; }, V:function(){ return "Nova velocidade"; },
+    D:function(){ return "Novo diâmetro"; }, L:function(){ return "Novo comprimento"; },
+    R:function(){ return "Novo coeficiente " + MET[metodo].sym; }, H:function(){ return "Nova perda de carga"; }
+  };
+  function combValida(br){
+    if(br.length > 2) return false;
+    return ["L","R","H"].filter(function(k){ return br.indexOf(k) >= 0; }).length <= 1;
+  }
+  function mostraEscolha(){
+    var f = EL[pend].closest(".field");
+    f.classList.remove("unknown","calc");
+    var b = f.querySelector(".badge"); if(b) b.remove();
+    caixa.style.display = "none";
+    ESC.hidden = false;
+    document.getElementById("esc-tit").textContent =
+      "Você alterou " + nomeVar(pend).toLowerCase() + ", que tinha sido calculado.";
+    var brancos = ORDEM.filter(function(k){ return EL[k].value.trim() === ""; });
+    var cand = ORDEM.filter(function(c){
+      return c !== pend && brancos.indexOf(c) < 0 && combValida(brancos.concat(c));
+    });
+    document.getElementById("esc-sub").textContent = cand.length
+      ? "Qual variável deve ser recalculada com o novo valor?"
+      : "Nenhuma variável pode ser recalculada nessa combinação. Desfaça a alteração ou apague um campo.";
+    var ops = document.getElementById("esc-ops");
+    ops.innerHTML = cand.map(function(c){
+      return '<button type="button" class="esc" data-k="'+c+'"><span class="sym">'+simbVar(c)+'</span>'+NOVO[c]()+'</button>';
+    }).join("") + '<button type="button" class="esc desfaz" data-k="">Desfazer alteração</button>';
+  }
+  document.getElementById("esc-ops").addEventListener("click", function(e){
+    var bt = e.target.closest("button"); if(!bt) return;
+    var c = bt.dataset.k;
+    if(c) EL[c].value = "";      // a escolhida vira a nova incógnita
+    else EL[pend].value = "";    // desfazer: volta a ser calculada
+    pend = null;
+    calcula();
+  });
+  function aoDigitar(k){
+    return function(){
+      var tem = EL[k].value.trim() !== "";
+      if(pend === null && tem && calcAnt.indexOf(k) >= 0) pend = k;
+      else if(pend === k && !tem) pend = null;
+      calcula();
+    };
+  }
+
   function calcula(){
     sincSel();
+    if(pend){ mostraEscolha(); return; }
+    ESC.hidden = true;
+    calcAnt = [];
     var vazios = [], vals = {}, invalido = null;
     ORDEM.forEach(function(k){
       var x = num(EL[k]);
@@ -576,6 +647,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
     var unicas = [];
     ORDEM.forEach(function(k){ if(resolvidas.indexOf(k) >= 0 && unicas.indexOf(k) < 0) unicas.push(k); });
+    calcAnt = unicas.slice();
 
     // mostra o valor calculado dentro do próprio campo da incógnita
     unicas.forEach(function(k){
@@ -644,7 +716,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
   document.getElementById("tab-hw").addEventListener("click", function(){ trocaMetodo("hw"); });
   document.getElementById("tab-fl").addEventListener("click", function(){ trocaMetodo("fl"); });
-  ORDEM.forEach(function(k){ EL[k].addEventListener("input", calcula); });
+  ORDEM.forEach(function(k){ EL[k].addEventListener("input", aoDigitar(k)); });
   window.addEventListener("resize", function(){
     Array.prototype.forEach.call(campos.querySelectorAll(".badge"), function(b){
       var inp = b.parentNode.querySelector("input"); b.style.top = (inp.offsetTop + inp.offsetHeight/2) + "px";
@@ -654,6 +726,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
   document.getElementById("btn-limpa").addEventListener("click", function(){
     ORDEM.forEach(function(k){ EL[k].value = ""; });
+    pend = null;
     calcula();
     EL.Q.focus();
   });
