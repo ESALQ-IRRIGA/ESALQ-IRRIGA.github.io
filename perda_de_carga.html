@@ -72,7 +72,7 @@ header p{margin:0;color:var(--ink-soft);font-size:.94rem;max-width:64ch}
 .field label .sym{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--water-deep);font-size:.95rem}
 .field label .un{color:var(--ink-soft);font-weight:400;font-size:.78rem}
 .field .desc{font-size:.76rem;color:var(--ink-soft);line-height:1.35}
-input[type=number]{
+input[type=number],input.num{
   font:500 1.02rem/1.3 "IBM Plex Mono",monospace;
   padding:10px 11px;border:1px solid var(--line);border-radius:2px;
   background:var(--paper);color:var(--ink);width:100%;
@@ -88,18 +88,32 @@ select.mat{
 }
 select.mat:focus{outline:2px solid var(--water);outline-offset:-1px;border-color:var(--water)}
 .field.mat-field{grid-column:1/-1}
+@media (min-width:860px){.field.mat-field{grid-column:span 2}}
+.field input[readonly]{cursor:default}
+.field.unknown input::placeholder{color:var(--solve);opacity:1}
+.field.calc input::placeholder{font-weight:600}
+.field.calc input{border-width:2px;padding:9px 91px 9px 10px}
+input[type=number]{-moz-appearance:textfield;appearance:textfield}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.field.calc .badge{background:var(--solve);color:var(--surface)}
 input:focus{outline:2px solid var(--water);outline-offset:-1px;border-color:var(--water)}
 .field.unknown input{background:var(--solve-bg);border-color:var(--solve)}
-.field.unknown label{padding-right:76px}
+.field.unknown input{padding-right:92px}
 .field.unknown label .sym{color:var(--solve)}
 .badge{
-  position:absolute;right:0;top:0;font-size:.68rem;letter-spacing:.02em;
+  position:absolute;right:10px;top:0;transform:translateY(-50%);pointer-events:none;font-size:.68rem;letter-spacing:.02em;
   color:var(--solve);border:1px solid var(--solve);border-radius:20px;padding:0 7px;
 }
 
 .result{border:1px solid var(--line);border-left:4px solid var(--water);background:var(--surface);border-radius:3px;padding:20px;margin-bottom:18px}
 .result.empty{border-left-color:var(--line)}
 .result.error{border-left-color:var(--alert)}
+.card .result{border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;
+  padding:14px 0 0;margin:18px 0 0}
+.card .result .derived{margin-top:0;padding-top:0;border-top:0}
+.card .result .derived div{display:flex;align-items:baseline;gap:10px}
+.card .result .derived dt{margin:0;font-size:.84rem}
+.card .result .nota{margin-top:0;flex-basis:100%}
 .solved{display:flex;flex-wrap:wrap;gap:16px 44px}
 .solved .name{font-size:.86rem;color:var(--ink-soft);margin-bottom:2px}
 .value{font-family:"IBM Plex Mono",monospace;font-size:clamp(1.7rem,5.4vw,2.4rem);font-weight:600;letter-spacing:-.02em;color:var(--water-deep);line-height:1.1}
@@ -249,15 +263,19 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
         <input id="f-H" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
         <span class="desc">Perda contínua no trecho.</span>
       </div>
+      <div class="field" data-k="J" id="campo-J">
+        <label for="f-J"><span class="sym">J</span> Perda unitária <span class="un">m/m</span></label>
+        <input id="f-J" class="num" type="text" readonly tabindex="-1" placeholder="—" aria-live="polite">
+        <span class="desc">Perda por metro de tubulação, J = hf / L. Sempre calculada.</span>
+      </div>
     </div>
-  </div>
-
-  <div class="result empty" id="resultado" aria-live="polite">
-    <p class="msg" id="msg">Deixe em branco o que você quer descobrir.</p>
-    <div id="res-ok" hidden>
-      <div class="solved" id="res-solved"></div>
-      <div class="formula" id="res-form"></div>
-      <dl class="derived" id="res-der"></dl>
+    <div class="result empty" id="resultado" aria-live="polite">
+      <p class="msg" id="msg">Deixe em branco o que você quer descobrir.</p>
+      <div id="res-ok" hidden>
+        <div class="solved" id="res-solved"></div>
+        <div class="formula" id="res-form"></div>
+        <dl class="derived" id="res-der"></dl>
+      </div>
     </div>
   </div>
 
@@ -442,12 +460,19 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       else vals[k] = x;
     });
 
-    Array.prototype.forEach.call(campos.querySelectorAll(".field"), function(f){
+    var FJ = document.getElementById("campo-J"), IJ = document.getElementById("f-J");
+    FJ.classList.remove("unknown","calc"); IJ.placeholder = "—";
+    var bj = FJ.querySelector(".badge"); if(bj) bj.remove();
+    caixa.style.display = "";
+    Array.prototype.forEach.call(campos.querySelectorAll(".field:not(#campo-J)"), function(f){
       var isInc = vazios.length <= 2 && vazios.indexOf(f.dataset.k) >= 0;
       f.classList.toggle("unknown", isInc);
+      f.classList.remove("calc");
+      EL[f.dataset.k].placeholder = "—";
       var b = f.querySelector(".badge");
       if(isInc && !b){ b = document.createElement("span"); b.className="badge"; b.textContent="incógnita"; f.appendChild(b); }
       else if(!isInc && b) b.remove();
+      if(isInc){ var inp = EL[f.dataset.k]; b.textContent = "incógnita"; b.style.top = (inp.offsetTop + inp.offsetHeight/2) + "px"; }
     });
 
     if(invalido){ falha("O valor de " + META[invalido].nome.toLowerCase() + " não é um número válido."); return; }
@@ -547,8 +572,17 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     var unicas = [];
     ORDEM.forEach(function(k){ if(resolvidas.indexOf(k) >= 0 && unicas.indexOf(k) < 0) unicas.push(k); });
 
+    // mostra o valor calculado dentro do próprio campo da incógnita
+    unicas.forEach(function(k){
+      var e = exibe(k, v), f = EL[k].closest(".field");
+      EL[k].placeholder = fmt(e.val, META[k].dec);
+      f.classList.add("calc");
+      var b = f.querySelector(".badge"); if(b) b.textContent = "calculado";
+    });
+
     var solved = document.getElementById("res-solved");
-    if(verificacao){
+    solved.style.display = "none";
+    if(false){
       solved.innerHTML = "<div><div class='name'>Todos os campos preenchidos</div>" +
         "<div class='value' style='font-size:1.15rem'>Verificação dos dados</div></div>";
     } else {
@@ -564,25 +598,26 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
     document.getElementById("res-form").innerHTML = "";
 
-    var itens = [
-      ["Vazão", fmt(v.Q,6)+" m³/s"],
-      ["Velocidade", fmt(v.V,3)+" m/s"],
-      ["Diâmetro", fmt(v.D*1000,2)+" mm"],
-      ["hf total", fmt(v.H,3)+" m"],
-      ["Perda unitária J", fmt(v.H/v.L,5)+" m/m"]
-    ];
+    var FJ = document.getElementById("campo-J"), IJ = document.getElementById("f-J");
+    IJ.placeholder = fmt(v.H/v.L,5);
+    FJ.classList.add("unknown","calc");
+    var bJ = document.createElement("span"); bJ.className = "badge"; bJ.textContent = "calculado"; FJ.appendChild(bJ);
+    bJ.style.top = (IJ.offsetTop + IJ.offsetHeight/2) + "px";
+    var itens = [];
     var dl = document.getElementById("res-der");
     dl.innerHTML = itens.map(function(p){
       return "<div><dt>"+p[0]+"</dt><dd>"+p[1]+"</dd></div>";
     }).join("");
 
     var notas = checks.slice();
+    if(verificacao) notas.unshift("Todos os campos preenchidos: conferindo os dados.");
     if(resolvidas.indexOf("R") >= 0){
       var mp = maisProximo(v.R);
       notas.push("Material com coeficiente mais próximo: " + mp[0] + " (" + MET[metodo].sym + " = " + vFmt(mp[1]) + ").");
     }
     if(v.V > 3) notas.push("Velocidade acima de 3 m/s: costuma ser alta demais para tubulação de recalque.");
     else if(v.V < 0.5) notas.push("Velocidade abaixo de 0,5 m/s: risco de sedimentação.");
+    if(!notas.length) caixa.style.display = "none";
     notas.forEach(function(t){
       var p = document.createElement("div");
       p.className = "nota"; p.textContent = t;
@@ -607,6 +642,11 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   document.getElementById("tab-hw").addEventListener("click", function(){ trocaMetodo("hw"); });
   document.getElementById("tab-fl").addEventListener("click", function(){ trocaMetodo("fl"); });
   ORDEM.forEach(function(k){ EL[k].addEventListener("input", calcula); });
+  window.addEventListener("resize", function(){
+    Array.prototype.forEach.call(campos.querySelectorAll(".badge"), function(b){
+      var inp = b.parentNode.querySelector("input"); b.style.top = (inp.offsetTop + inp.offsetHeight/2) + "px";
+    });
+  });
 
   document.getElementById("btn-ex").addEventListener("click", function(){
     EL.Q.value = 0.014; EL.L.value = 100;
