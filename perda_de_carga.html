@@ -509,9 +509,13 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     pend = null;
     calcula();
   });
+  // só é "alteração" quando o resultado já existia ao entrar no campo;
+  // enquanto o usuário ainda digita o último dado, apenas recalcula
+  var haviaResultado = false;
+  function aoFocar(){ haviaResultado = !!ultimo; }
   function aoDigitar(k){
     return function(){
-      if(pend === null && ultimo)
+      if(pend === null && ultimo && haviaResultado)
         pend = {k:k, inc:ultimo.inc, snap:ultimo.val, orig: rawAnt[k] || ""};
       calcula();
     };
@@ -731,7 +735,11 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
   document.getElementById("tab-hw").addEventListener("click", function(){ trocaMetodo("hw"); });
   document.getElementById("tab-fl").addEventListener("click", function(){ trocaMetodo("fl"); });
-  ORDEM.forEach(function(k){ EL[k].addEventListener("input", aoDigitar(k)); });
+  ORDEM.forEach(function(k){
+    EL[k].addEventListener("input", aoDigitar(k));
+    EL[k].addEventListener("focus", aoFocar);
+  });
+  SEL.addEventListener("focus", aoFocar);
   window.addEventListener("resize", function(){
     Array.prototype.forEach.call(document.querySelectorAll("#painel .field .badge"), function(b){
       var inp = b.parentNode.querySelector("input"); b.style.top = (inp.offsetTop + inp.offsetHeight/2) + "px";
