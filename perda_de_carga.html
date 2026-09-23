@@ -47,6 +47,7 @@ header p{margin:0;color:var(--ink-soft);font-size:.94rem;max-width:64ch}
   background:transparent;color:var(--ink-soft);text-align:left;
 }
 .tab .eq{display:block;font-family:"IBM Plex Mono",monospace;font-size:.74rem;margin-top:7px;opacity:.8;overflow-x:auto}
+.tab .faixa{display:block;font-weight:400;font-size:.8rem;margin-top:2px;opacity:.85}
 .tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 .tab:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
@@ -137,6 +138,15 @@ button.esc:hover{background:var(--solve);color:var(--surface)}
 button.esc:hover .sym{color:var(--surface)}
 button.esc.desfaz{border-color:var(--line);color:var(--ink-soft)}
 button.esc.desfaz:hover{background:transparent;border-color:var(--ink-soft);color:var(--ink)}
+.aviso-faixa{margin:18px 0 0;padding:12px 14px;border:1px solid var(--alert);border-left:4px solid var(--alert);
+  border-radius:3px;background:var(--surface);font-size:.88rem;line-height:1.5;color:var(--alert);
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.aviso-faixa[hidden]{display:none}
+.aviso-faixa span{flex:1 1 260px}
+.aviso-faixa button{font:500 .86rem/1.2 inherit;font-family:inherit;cursor:pointer;padding:8px 12px;
+  border:1px solid var(--alert);background:var(--surface);color:var(--alert);border-radius:2px}
+.aviso-faixa button:hover{background:var(--alert);color:var(--surface)}
+.aviso-faixa button:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 button.esc:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
 button.act{
@@ -217,16 +227,17 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
 <header>
   <h1>Perda de carga em condutos forçados</h1>
-  <p>Preencha o que você sabe e deixe em branco a variável que quer descobrir. A equação de perda de carga é resolvida para ela; a velocidade (continuidade) e a perda de carga unitária são sempre calculadas.</p>
 </header>
 
 <div class="tabs" role="tablist">
   <button class="tab" id="tab-hw" role="tab" aria-selected="true" aria-controls="painel">
     Hazen-Williams
+    <span class="faixa">50 mm ≤ Diâmetro ≤ 300 mm</span>
     <span class="eq"></span>
   </button>
   <button class="tab" id="tab-fl" role="tab" aria-selected="false" aria-controls="painel">
     Flamant
+    <span class="faixa">Diâmetro &lt; 50 mm</span>
     <span class="eq"></span>
   </button>
 </div>
@@ -273,6 +284,10 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
         <input id="f-J" class="num" type="text" readonly tabindex="-1" placeholder="—" aria-live="polite">
         <span class="desc">Perda de carga unitária</span>
       </div>
+    </div>
+    <div class="aviso-faixa" id="aviso-faixa" hidden aria-live="polite">
+      <span id="aviso-txt"></span>
+      <button type="button" id="aviso-btn"></button>
     </div>
     <div class="escolha" id="escolha" hidden aria-live="polite">
       <p class="esc-tit" id="esc-tit"></p>
@@ -517,6 +532,33 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     b.textContent = "calculado";
     b.style.top = (I.offsetTop + I.offsetHeight/2) + "px";
   }
+  // aviso quando o diâmetro fica fora da faixa recomendada para a equação
+  var AV = document.getElementById("aviso-faixa"), AVt = document.getElementById("aviso-txt"),
+      AVb = document.getElementById("aviso-btn"), avisoPara = null;
+  function faixa(Dmm, calculado){
+    avisoPara = null;
+    if(Dmm !== null && isFinite(Dmm) && Dmm > 0){
+      var qual = calculado ? "O diâmetro calculado" : "O diâmetro informado";
+      var d = fmt(Dmm, 2) + " mm";
+      if(metodo === "hw" && Dmm < 50){
+        AVt.textContent = qual + " (" + d + ") é menor que 50 mm, fora da faixa recomendada para Hazen-Williams. Recomenda-se fazer os cálculos pela equação de Flamant.";
+        avisoPara = "fl";
+      } else if(metodo === "hw" && Dmm > 300){
+        AVt.textContent = qual + " (" + d + ") é maior que 300 mm, fora da faixa recomendada para Hazen-Williams (50 a 300 mm).";
+      } else if(metodo === "fl" && Dmm >= 50){
+        AVt.textContent = qual + " (" + d + ") não é menor que 50 mm, fora da faixa recomendada para Flamant." +
+          (Dmm <= 300 ? " Recomenda-se fazer os cálculos pela equação de Hazen-Williams." : "");
+        if(Dmm <= 300) avisoPara = "hw";
+      } else { AV.hidden = true; return; }
+      AVb.hidden = !avisoPara;
+      if(avisoPara) AVb.textContent = "Calcular com " + MET[avisoPara].nome;
+      AV.hidden = false;
+      return;
+    }
+    AV.hidden = true;
+  }
+  AVb.addEventListener("click", function(){ if(avisoPara) trocaMetodo(avisoPara); });
+
   function velocidade(Q, Dm){ return 4*Q/(Math.PI*Dm*Dm); }
 
   function calcula(){
@@ -541,7 +583,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       else vals[k] = x;
     });
 
-    saida("V", null); saida("J", null);
+    saida("V", null); saida("J", null); faixa(null);
     caixa.style.display = "";
     Array.prototype.forEach.call(campos.querySelectorAll(".field"), function(f){
       var isInc = vazios.length === 1 && vazios[0] === f.dataset.k;
@@ -555,6 +597,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     });
 
     if(def(vals.L) && def(vals.H) && vals.L > 0 && vals.H > 0) saida("J", vals.H/vals.L, 5);
+    if(def(vals.D) && vals.D > 0) faixa(vals.D);
     if(def(vals.Q) && def(vals.D) && vals.Q > 0 && vals.D > 0) saida("V", velocidade(vals.Q/3600, vals.D/1000), 3);
 
     if(invalido){ falha("O valor de " + META[invalido].nome.toLowerCase() + " não é um número válido."); return; }
@@ -644,6 +687,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
     saida("J", v.H/v.L, 5);
     saida("V", v.V, 3);
+    faixa(v.D*1000, resolvidas.indexOf("D") >= 0);
     if(unicas.length === 1){
       ultimo = {inc: unicas[0], val: exibe(unicas[0], v).val};
       rawAnt = {}; ORDEM.forEach(function(k){ rawAnt[k] = EL[k].value; });
