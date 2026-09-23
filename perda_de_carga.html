@@ -713,6 +713,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   }
 
   function trocaMetodo(m){
+    if(m === metodo) return;          // clicou na aba que já está aberta
     metodo = m;
     document.getElementById("tab-hw").setAttribute("aria-selected", m === "hw");
     document.getElementById("tab-fl").setAttribute("aria-selected", m === "fl");
@@ -721,7 +722,10 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     document.getElementById("nome-R").textContent = "Coef. " + M.sym;
     document.getElementById("un-R").textContent = M.un;
     montaSel();
-    if(EL.R.value !== ""){ EL.R.value = MAT[m][PADRAO[m]][1]; SEL.value = String(PADRAO[m]); }
+    // trocar de método começa um novo cálculo, para não levar dados do outro método
+    ORDEM.forEach(function(k){ EL[k].value = ""; });
+    SEL.value = "";
+    pend = null; ultimo = null;
     calcula();
   }
 
