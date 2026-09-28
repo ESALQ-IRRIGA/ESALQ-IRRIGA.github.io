@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Perda de carga — ESALQ Irriga v1.2</title>
-<meta name="description" content="Calculadora de perda de carga em condutos forçados — Hazen-Williams e Flamant. ESALQ Irriga.">
+<title>Perda de carga — ESALQ Irriga v1.3</title>
+<meta name="description" content="Calculadora de perda de carga em condutos forçados — Hazen-Williams, Flamant e Darcy-Weisbach (Colebrook-White). ESALQ Irriga.">
 <meta name="theme-color" content="#0E2A33">
 <meta name="color-scheme" content="light">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ESALQ Irriga v1.2">
+<meta name="apple-mobile-web-app-title" content="ESALQ Irriga v1.3">
 <meta name="application-name" content="ESALQ Irriga">
 <link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,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">
 <link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAMAAAAKE/YAAAAB/lBMVEX+/v4CbMpxpCNFeiIHc9UCKExShSZnlyYxh9bS5fa21fFLltiYw+uQt1DE3PNrquTH2a5rqN2my+0Ac+GnxnXj7fSEuOfa5sqMvOni7NUnR2lJmOLd6fRQaoavyYrS4rh7s+eVuGtYcYtwmVTN2sohfdI0jOBaoeSBrTm1yqkQNFkigNS50pHo8NyXtIQ3VnZdodySpLZdkSiGqHGdwGhDXXtgjyt1semtx49GYX1hjUe7x9K605C+0rDA1pwlfs89kNpBjtp4nmGGsT6jvZJdikBejUBrgZl+kaZ5oVJ7oGR4r+B5sCN6sd+Im7CHskCduY2tusjBy9cfgNokR20+kOBngqBwnUNuoh96p0SHma2Er0CDrkOQr4Cdr8Cnvpfk7OEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADzlUlFAAAAgHRSTlP+/Pz8+P36+tfay8rB1NHBxMHE/sPmv9DA2N3K4cjAx7/HxdPP4tXE5sLw4b/dwNPEwPjEyM72wL/M3M3AxMDf0M7L4b/f4MG/1cq//7/A4L/H0OXg0MLi/+K/3+DBw8DfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADLDgJAAAAngSURBVHja7VsJm5pYFgW8odgEFUFs1NJSy7KsLalMUlk76fTePb1N9+zb//8VA++x81jM8BC/5iRfFqwkh8u55y6PMEyLFi1atGjRokWLFi1a/H4hgXx8pHcsqxwbZw1YFo6Ms8i6MI+LtIxIw+SospDFpI8qFz9lPUjHw3kOPmnheLIw4MyCclxZ6LE+Es4DNoojyUWIkT6OXOzHOR9FLko+2b7ne/Bd80mvgww0ffpi0zl/5zNVQv5NF4gaVXJgI1qzSQs+TzX9u8Y7Rz8d98aXFUjexF1jORtBWRkkvSS80tieQ067dlPngT4QmqR+s2WtkrsN30Ggkb4XsOtnNNcNlLUMGTpQAlk3rpybkEkt83YaI2jSfLWLl5zmNf6kKqJCIydGOd/YFGigrPtFpOTmuXU4yQ4K5dOUOTdwYshOtFDWf2xYDy2UehpSo5IQjP9L93VCKRvCBiWjFKSYVbbbhrumJGGJahdWTesIkjBVYw6bjP39lqP9cjlLFxbsuSNoQDIGA2D5E0M4eMNXohJmz2TKESRheo45yNYpLHHJrPr7dPrixR9cvHgxfZX1x9aHTMJUyH54FMVl8pb6suAeQR/ikFGNt6M/T8+mZwjT6WWM9KPb6dT7wPnFyqtJkqLJYB42CY1HJfFVrJweqLXDz3hyW5b05e3t9OzPh+nzEhuwx59EkeQZ+ejX6WMXE1Gtn7eU61vTOOlfiPUcQOhbUo3UjfyVwCoa68uv8ndotdUYAQoq4eSVR/nryaRorhRrFnR2JTQ823tcbPP1tE5SYZCMs08Cs/g5039g78alCofOXHKc5RXEtKxrmAjk4tZu+ihSFDM1K7K1NSFKCS3+OxLpafaXmXUJJMz6vIOfr8PGwygzx6g1iSP/LOIV6poub38o5/d0HcQqFrSF2xFj9eoXA+spuwUdQA07BbFEaD4FVmR8UTg/C3rOqxOB79EUBxSPSorQZzT3/M2SnEjKjCT0iwVCMRfVskeCTjvk1k1G1osmQYX6ga5QJA5xg8VpCpbzVIBRBaxnyVYKMptaqJXCpZYAkfJmhkEGYCcFJYbWzgkK9ywakPsR52aK2i9KoZ6XyPSBir5QCyZACZCWFLEwFkAz0Jltu2SEX+iqA0nfUbZfhgZifjAGFBWdlYUb2Bk+Cw1lrescXqQx/UluNN7Ts47MRhISH0mClqSm5jdO1c8w/rvn7zLlfJ7v3tmf+xWm+sM6uewOXztPfIn9viiEXqGtvG2aQN6Bq2Jb4TAGO2zA3jUTwo5JtLW8Slu1Pqy8QE8i/6AIuuZ7s+rdhRXxazM7Xyrf7Qm51gEQRkmUgmcuxi5gB1FyUlGmoo4sj5Y0whNQ0mZhaEpeLa+4vnjdevHfKpHa+YFS8kFWO5fjBqH4qFVidTsIXzgLF/ayJg1Rl42Ek3VCUJ0Fwx/ACpf+KoWXQcTSC4q5LQYVUPfvUZMLzQy/k7qrvhzu1z2ae52puPUFgu6lSpemuL9ybrE/qLa49On/56DqBxf5I9LEMA/83o8QGpJkarLglGPHJgRbU7KH7eJJPIFxb9Z9WiHpdSBpS4fIf4Fzfg2/zdXiIbeQ8NvFBefgn5VPWiKaT9gkgBU0Am/RLlsqRsMu56Nq0hBdfaR4mx+5bRkNL7gIKiS98zs8A9gM6LD5iIVtr8vFUXUiakz0RJwUbns/vxjPLjiOHmnZN48BQFW0x0OOgApJ3/lrdFNnA9ok/gDn5dYX1wTK3dlppUXW3x3Mz23NkiRJVSVJMTcCJKk7Lnhe4hB2lmb8elxxcRlkHoyIymbNJnjr8Dy/i7hKMv5QOWPGOwHIJCJp8XA7TSlrZ2/vTrvcSTzIvipGV8Oq67jHQlSlgeJgEH37QbHT4T5/HmnbJpJ5h9XuiPnkxP3uYTiKGnaVpDXAu3rrHAXVbT3cHwUtCKgYD7db4HUna4V3tu30KjvQBSSvNy7lkDE3xLq4fv0jDnqlU4BHWtCTbsEKz32bswRIWiC+PwhOPBaIcsD56dgLsn9hUamqActDINiczgpzL96K+yAI3Ym37+2deOAQcU/Lp5GqOKu2o8arF5tcVJzE8+xZsh01pz4X0E0tTiLguF6Ksn+twsUHavLIpN3nL3hNnTgXkt6NpDH6JkYZ+8Qo0XtU7Hxr1NJrOVU8tGdJ20ULJyo2s1iYL059J4lhVrFVW7o3A7B5tINOT7U2whol4TlBGkNSjfnwtvoCg3afA9c9YL1eY8sjtEzEIj76S1rN4y731yjnKxpz4lxDbqz4r6XhNy9TXuHEdpNs9bZP+Gf8M59z95oQ5iFDB8TpSTWFFG8dVR1JNLy1wOIJ78JjPfPCHCvkY2zX9W0mUnbhejW6gpZ54yXPR0gjafTiYe7hZvX7p5TCzQzmG6csC8L7zTxsLQY2EGQi44LC+3Ao/22clkY3uNajxFnEVdkl5RgJ2JYYtB7JCo821bOAMv/k5ARX6bg03gZ+fUFvbwORxgI1cxaew405chTvM9ihbFyEnJ1AI82OYoMhNuwhrWRc4fe1tZhTA+LtT4ZhgwobJipnTPohLeduNCspDALMyy3Wh562ucCdRUuGoD/aRinzT3rpOWsYvY0uDWF83rlBMtBInRyE2xpRwoFfEDgP01U7uHRKRc6dzmeG18kRaOsQO+JaxaTBn6xwO52qgV2OZqAZ5qbT4bdhAwrJydD5duf3Hjd8nPMobRtu6McfKHWlIfiOE+xRMF3p0ckE1ZSdhh1wu+Q7ZTiPEilJA//puLj/r9eAPn8HmLOuO3H/k+2/tLRyKXc6e3HmRtRM+gvEuvOvwJzEgTLXNM1Uwrf7t8uODz8HMzhH3Y9aBXf+GZ/OfYYCRz+97HSSpAmcXyfizDEUcR8Sut8mn+jqp2UnDsS5l+Z8leTco0ka5WLIabmYbd/0em+2s5tvX/KdFNx0JHB2a8o4emFBlTOz6uwFHnvkIl27L+oSh2fW+3C+SdfBbir0p7RJM8t9SN8T9rrXydBfMfTxRXnOy4wxZVbHeBg/d+DLkn7GJF0CN0mnKbXQR9lkRAY9jnN2i8j1ATiXZU0yOy55qTbOkcqYx5lgHMgnhofh7MSaL5eEceP4fpgQdK2cnfT6sog0wTiSVWXI1I1lfrBXyYzz2s+IOB6Y+pFbGz8nJOEwHvsecwj0+MxgLwlJiHYxoVSumQPhPkvQ42QJSTrHW+Zw6L0kct7GghqWldHBMjCxDSFo5LN0O4r7pG78hPZwMG6SrHkj7XZhFnZ7TCPwEDftLcHtOE8wDYhyqO1vQ5V8QxIHbkiHI6ZRGM+W7kyY4Rz/QFWUaSLeLJwy+ZCaADnux1Om0VjFzycuusOH3php0aJFixYtWrRo0aJFi98b/geyjapbvt+RMwAAAABJRU5ErkJggg==">
@@ -108,7 +108,6 @@ input:focus{outline:2px solid var(--water);outline-offset:-1px;border-color:var(
   padding:14px 0 0;margin:18px 0 0}
 .card .result .derived{margin-top:0;padding-top:0;border-top:0}
 .card .result .derived div{display:flex;align-items:baseline;gap:10px}
-.card .result .derived dt{margin:0;font-size:.84rem}
 .card .result .nota{margin-top:0;flex-basis:100%}
 .solved{display:flex;flex-wrap:wrap;gap:16px 44px}
 .solved .name{font-size:.86rem;color:var(--ink-soft);margin-bottom:2px}
@@ -122,8 +121,6 @@ input:focus{outline:2px solid var(--water);outline-offset:-1px;border-color:var(
 
 .derived{display:flex;flex-wrap:wrap;gap:22px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
 .derived div{min-width:96px}
-.derived dt{font-size:.76rem;color:var(--ink-soft);margin-bottom:2px}
-.derived dd{margin:0;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:1.02rem}
 .nota{margin-top:12px;font-size:.84rem;color:var(--solve);line-height:1.45}
 
 .escolha{margin:18px 0 0;padding:14px 16px;border:1px solid var(--solve);border-left:4px solid var(--solve);
@@ -204,6 +201,49 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 @media print{.brandbar .side,.toolbar,.ajuda{display:none}}
 @media (max-width:560px){.brandbar img{width:180px}}
 
+
+/* ---- v1.3: Darcy-Weisbach e cadastro de tubulações ---- */
+[hidden]{display:none!important}
+.card-top .acoes{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:640px){.tabs{flex-direction:column}}
+.info-dw{margin:0 0 16px;padding:12px 14px;border:1px solid var(--line);border-left:4px solid var(--water);
+  border-radius:3px;background:var(--paper);font-size:.84rem;color:var(--ink-soft);line-height:1.5}
+.info-dw .rot{display:block;font-weight:600;color:var(--ink);margin-bottom:4px}
+.info-dw .cw{overflow-x:auto;color:var(--ink);font-size:.95rem;padding:4px 0 8px}
+.tubo-linha{margin:0 0 16px;padding:0 0 16px;border-bottom:1px dashed var(--line)}
+.tubo-linha .desc a{color:var(--water-deep)}
+input.txt{
+  font:500 .95rem/1.3 "IBM Plex Sans",system-ui,sans-serif;
+  padding:10px 11px;border:1px solid var(--line);border-radius:2px;
+  background:var(--paper);color:var(--ink);width:100%;
+}
+.dupla{display:grid;grid-template-columns:1fr 112px;gap:6px}
+dialog.cad{width:calc(100% - 24px);max-width:900px;max-height:calc(100vh - 32px);margin:auto;
+  color:var(--ink);box-shadow:0 18px 50px rgba(14,42,51,.28)}
+dialog.cad::backdrop{background:rgba(14,42,51,.5)}
+.cad .card-top{margin-bottom:10px}
+.cad-msg{margin:12px 0 0;font-size:.86rem;min-height:1.3em}
+.cad-msg.erro{color:var(--alert)}
+.cad-msg.ok{color:var(--water-deep)}
+.cad-bts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+button.act.pri{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+button.act.pri:hover{background:var(--water-deep);border-color:var(--water-deep);color:var(--paper)}
+.cad-lista{overflow-x:auto;margin-top:20px;border-top:1px solid var(--line);padding-top:14px}
+.cad-lista h3{font-size:.92rem;font-weight:600;margin:0 0 8px}
+.cad-lista .vazio{color:var(--ink-soft);font-size:.88rem;margin:0}
+table.cad-tab{width:100%;border-collapse:collapse;font-size:.84rem}
+.cad-tab th,.cad-tab td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap;vertical-align:middle}
+.cad-tab th{font-weight:600;font-size:.76rem;color:var(--ink-soft)}
+.cad-tab td.n{font-family:"IBM Plex Mono",monospace;text-align:right}
+.cad-tab td.mt{white-space:normal;min-width:160px}
+.cad-tab td.bt{display:flex;gap:6px}
+button.mini{font:500 .78rem/1 inherit;font-family:inherit;cursor:pointer;padding:6px 9px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:2px}
+button.mini:hover{border-color:var(--water);color:var(--water-deep)}
+button.mini.del:hover{border-color:var(--alert);color:var(--alert)}
+button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
+.cad-io{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+@media print{.card-top .acoes,.tubo-linha{display:none}}
 </style>
 </head>
 <body>
@@ -240,6 +280,11 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     <span class="faixa">Diâmetro &lt; 50 mm</span>
     <span class="eq"></span>
   </button>
+  <button class="tab" id="tab-dw" role="tab" aria-selected="false" aria-controls="painel">
+    Darcy-Weisbach
+    <span class="faixa">Qualquer diâmetro · f por Colebrook-White</span>
+    <span class="eq"></span>
+  </button>
 </div>
 
 <div id="painel" role="tabpanel">
@@ -247,9 +292,23 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   <div class="card">
     <div class="card-top">
       <h2>Variáveis</h2>
-      <button class="act" id="btn-limpa" title="Apaga todos os campos para começar outro cálculo">Novo cálculo</button>
+      <div class="acoes">
+        <button class="act" id="btn-cad" title="Cadastrar tubulações: diâmetros, PN e coeficientes de rugosidade">Cadastro de tubulações</button>
+        <button class="act" id="btn-limpa" title="Apaga todos os campos para começar outro cálculo">Novo cálculo</button>
+      </div>
     </div>
     <p class="hint">Deixe em branco apenas um campo: a variável a calcular. Depois do resultado, ao alterar qualquer valor você escolhe qual variável deve ser recalculada.</p>
+    <div class="info-dw" id="info-dw" hidden>
+      <span class="rot">Fator de atrito f: Colebrook-White (1939), resolvida por iteração de Newton</span>
+      <div class="cw" id="eq-cw"></div>
+      Re = V·D/ν, com a viscosidade cinemática ν da água interpolada pela temperatura. Em regime laminar (Re &lt; 2300), f = 64/Re.
+    </div>
+    <div class="tubo-linha">
+      <div class="field">
+        <label for="sel-tubo">Tubulação cadastrada <span class="un" id="tubo-un">preenche o diâmetro interno e o coeficiente</span></label>
+        <select id="sel-tubo" class="mat"></select>
+      </div>
+    </div>
     <div class="grid" id="campos">
       <div class="field" data-k="Q">
         <label for="f-Q"><span class="sym">Q</span> Vazão <span class="un">m³/h</span></label>
@@ -272,6 +331,11 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
         <label for="f-H"><span class="sym">hf</span> Perda de carga <span class="un">m</span></label>
         <input id="f-H" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
       </div>
+      <div class="field" data-k="T" id="campo-T" hidden>
+        <label for="f-T"><span class="sym">T</span> Temperatura da água <span class="un">°C</span></label>
+        <input id="f-T" type="number" step="any" min="0" max="100" inputmode="decimal" value="20">
+        <span class="desc" id="desc-T"></span>
+      </div>
     </div>
     <div class="grid saidas" id="saidas">
       <div class="field" data-k="V" id="campo-V">
@@ -283,6 +347,21 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
         <label for="f-J"><span class="sym">J</span> Perda unitária <span class="un">m/m</span></label>
         <input id="f-J" class="num" type="text" readonly tabindex="-1" placeholder="—" aria-live="polite">
         <span class="desc">Perda de carga unitária</span>
+      </div>
+      <div class="field" data-k="Re" id="campo-Re" hidden>
+        <label for="f-Re"><span class="sym">Re</span> Reynolds <span class="un">adimensional</span></label>
+        <input id="f-Re" class="num" type="text" readonly tabindex="-1" placeholder="—" aria-live="polite">
+        <span class="desc">Número de Reynolds</span>
+      </div>
+      <div class="field" data-k="f" id="campo-f" hidden>
+        <label for="f-f"><span class="sym">f</span> Fator de atrito <span class="un">adimensional</span></label>
+        <input id="f-f" class="num" type="text" readonly tabindex="-1" placeholder="—" aria-live="polite">
+        <span class="desc">Colebrook-White</span>
+      </div>
+      <div class="field" data-k="reg" id="campo-reg" hidden>
+        <label for="f-reg">Regime de escoamento</label>
+        <input id="f-reg" type="text" readonly tabindex="-1" placeholder="—" aria-live="polite">
+        <span class="desc">Laminar &lt; 2300 · turbulento &gt; 4000</span>
       </div>
     </div>
     <div class="aviso-faixa" id="aviso-faixa" hidden aria-live="polite">
@@ -306,11 +385,80 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
 </div>
 
+<dialog id="cad" class="card cad" aria-labelledby="cad-tit">
+  <div class="card-top">
+    <h2 id="cad-tit">Cadastro de tubulações</h2>
+    <button type="button" class="act" id="cad-fecha">Fechar</button>
+  </div>
+  <p class="hint" id="cad-armaz"></p>
+  <form id="cad-form" novalidate>
+    <div class="grid">
+      <div class="field mat-field">
+        <label for="cad-base">Preencher coeficientes pelo material <span class="un">opcional</span></label>
+        <select id="cad-base" class="mat"></select>
+      </div>
+      <div class="field mat-field">
+        <label for="cad-mat">Material / descrição <span class="un">obrigatório</span></label>
+        <input id="cad-mat" class="txt" type="text" maxlength="120" autocomplete="off" placeholder="ex.: PVC irrigação soldável">
+      </div>
+      <div class="field">
+        <label for="cad-dn"><span class="sym">DN</span> Diâmetro nominal</label>
+        <input id="cad-dn" class="num" type="text" maxlength="20" autocomplete="off" placeholder="ex.: 50">
+      </div>
+      <div class="field">
+        <label for="cad-pn"><span class="sym">PN</span> Pressão nominal</label>
+        <div class="dupla">
+          <input id="cad-pn" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
+          <select id="cad-pnun" class="mat" aria-label="Unidade da pressão nominal">
+            <option value="mca">mca</option><option value="bar">bar</option>
+            <option value="kgf/cm²">kgf/cm²</option><option value="MPa">MPa</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="cad-de"><span class="sym">De</span> Diâmetro externo <span class="un">mm</span></label>
+        <input id="cad-de" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
+      </div>
+      <div class="field">
+        <label for="cad-di"><span class="sym">Di</span> Diâmetro interno <span class="un">mm</span></label>
+        <input id="cad-di" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
+        <span class="desc" id="cad-e">Espessura da parede: —</span>
+      </div>
+      <div class="field">
+        <label for="cad-eps"><span class="sym">ε</span> Rugosidade absoluta <span class="un">mm</span></label>
+        <input id="cad-eps" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
+        <span class="desc">Darcy-Weisbach</span>
+      </div>
+      <div class="field">
+        <label for="cad-C"><span class="sym">C</span> Coeficiente C</label>
+        <input id="cad-C" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
+        <span class="desc">Hazen-Williams</span>
+      </div>
+      <div class="field">
+        <label for="cad-b"><span class="sym">b</span> Coeficiente b</label>
+        <input id="cad-b" type="number" step="any" min="0" inputmode="decimal" placeholder="—">
+        <span class="desc">Flamant</span>
+      </div>
+    </div>
+    <p class="cad-msg" id="cad-msg" aria-live="polite"></p>
+    <div class="cad-bts">
+      <button type="submit" class="act pri" id="cad-salva">Adicionar tubulação</button>
+      <button type="button" class="act" id="cad-cancela" hidden>Cancelar edição</button>
+    </div>
+  </form>
+  <div class="cad-lista" id="cad-lista"></div>
+  <div class="cad-bts cad-io">
+    <button type="button" class="act" id="cad-exp">Exportar cadastro (.txt)</button>
+    <button type="button" class="act" id="cad-imp">Importar cadastro (.txt)</button>
+    <input type="file" id="cad-arq" accept=".txt,.csv,.json,text/plain,text/csv,application/json" hidden>
+  </div>
+</dialog>
+
 <div class="creditos">
   <span class="rot">Desenvolvido na disciplina de Hidráulica Aplicada / 2026.2</span>
   Alunos: Iêdo Peroba de Oliveira Teodoro; Olavo Pimentel Silva; Danrley de Abreu dos Santos e Juliano Jorge Valentim
   <span class="orient">Sob orientação do Prof. Dr. Fernando Campos Mendonça</span>
-  <span class="versao">Versão 1.2 — setembro de 2026</span>
+  <span class="versao">Versão 1.3 — setembro de 2026</span>
 </div>
 
 </div>
@@ -323,16 +471,17 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
   var MET = {
     hw: {
-      nome:"Hazen-Williams", a:1.852, m:4.87, sym:"C", rotulo:"Coeficiente C", un:"adimensional",
-      desc:"Escolha o material para preencher o coeficiente C, ou digite outro valor. Deixe em branco para calculá-lo.",
+      nome:"Hazen-Williams", a:1.852, m:4.87, sym:"C", rotulo:"Coeficiente C", curto:"Coef. C", un:"adimensional", tubo:"C",
       k:function(R){ return 10.65/Math.pow(R,1.852); },
       rug:function(Q,L,D,hf){ return Q*Math.pow(10.65*L/(hf*Math.pow(D,4.87)),1/1.852); }
     },
     fl: {
-      nome:"Flamant", a:1.75, m:4.75, sym:"b", rotulo:"Coeficiente b", un:"adimensional",
-      desc:"Escolha o material para preencher o coeficiente b, ou digite outro valor. Deixe em branco para calculá-lo.",
+      nome:"Flamant", a:1.75, m:4.75, sym:"b", rotulo:"Coeficiente b", curto:"Coef. b", un:"adimensional", tubo:"b",
       k:function(R){ return 6.107*R; },
       rug:function(Q,L,D,hf){ return hf*Math.pow(D,4.75)/(6.107*Math.pow(Q,1.75)*L); }
+    },
+    dw: {
+      nome:"Darcy-Weisbach", sym:"ε", rotulo:"Rugosidade absoluta ε", curto:"Rugosidade", un:"mm", tubo:"eps"
     }
   };
 
@@ -354,25 +503,46 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       ["Concreto", 0.000185],
       ["PVC e polietileno", 0.000135],
       ["Chumbo", 0.000140]
+    ],
+    // rugosidade absoluta ε em mm (valores usuais: Porto, 2006; Azevedo Netto, 1998; Moody, 1944)
+    dw: [
+      ["Plásticos: PVC, polietileno (PE)", 0.0015],
+      ["Cobre, latão, vidro", 0.0015],
+      ["Cimento amianto", 0.025],
+      ["Aço comercial novo, aço soldado", 0.045],
+      ["Ferro fundido revestido de asfalto", 0.12],
+      ["Aço galvanizado, ferro galvanizado", 0.15],
+      ["Ferro fundido novo", 0.26],
+      ["Concreto liso, bem acabado", 0.3],
+      ["Ferro fundido usado, com incrustações", 1.5],
+      ["Concreto rugoso, aço rebitado", 3]
     ]
   };
-  var PADRAO = { hw: 0, fl: 3 };   // PVC em cada método
+  var PADRAO = { hw: 0, fl: 3, dw: 0 };   // PVC em cada método
+
+  // viscosidade cinemática da água, ν (×10⁻⁶ m²/s), pela temperatura (°C)
+  // Huber et al. (2009, IAPWS 2008); Kell (1975); CRC Handbook
+  var AGUA = [[0,1.792],[4,1.567],[5,1.519],[10,1.307],[15,1.140],[20,1.004],[25,0.893],[30,0.801],
+              [35,0.723],[40,0.658],[45,0.602],[50,0.554],[55,0.511],[60,0.475],[65,0.442],[70,0.413],
+              [75,0.388],[80,0.365],[85,0.345],[90,0.326],[95,0.310],[100,0.294]];
 
   var ORDEM = ["Q","D","L","R","H"];
   var EL = {};
   ORDEM.forEach(function(k){ EL[k] = document.getElementById("f-"+k); });
+  var TEMP = document.getElementById("f-T");
   var campos = document.getElementById("campos");
   var caixa = document.getElementById("resultado");
   var msg = document.getElementById("msg");
   var ok = document.getElementById("res-ok");
   var SEL = document.getElementById("sel-R");
+  var SELT = document.getElementById("sel-tubo");
 
   function vFmt(x){ return String(x).replace(".", ","); }
   function montaSel(){
     var M = MET[metodo];
     SEL.innerHTML = '<option value="">Outro valor (digite abaixo) ou deixe em branco para calcular</option>' +
       MAT[metodo].map(function(m, i){
-        return '<option value="'+i+'">'+m[0]+' — '+M.sym+' = '+vFmt(m[1])+'</option>';
+        return '<option value="'+i+'">'+m[0]+' — '+M.sym+' = '+vFmt(m[1])+(metodo === "dw" ? " mm" : "")+'</option>';
       }).join("");
   }
   function igual(a, b){ return Math.abs(a - b) <= 1e-9*Math.max(Math.abs(a), Math.abs(b)); }
@@ -413,22 +583,16 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   var QC = par(fr('Q','C')) + ex('1,852');      // (Q/C) elevado a 1,852
 
   var ISO = {
-    hw:{ H: eq(ig(HF, '10,65' + QC + sp + fr('L','D<sup>4,87</sup>'))),
-         Q: eq(ig('Q', 'C · ' + par(fr(HF+' · D<sup>4,87</sup>','10,65 · L')) + ex(fr('1','1,852')))),
-         L: eq(ig('L', fr(HF+' · D<sup>4,87</sup>', '10,65' + QC))),
-         R: eq(ig('C', 'Q · ' + par(fr('10,65 · L', HF+' · D<sup>4,87</sup>')) + ex(fr('1','1,852')))),
-         D: eq(ig('D', par(fr('10,65' + QC + sp + '· L', HF)) + ex(fr('1','4,87')))),
-         DV:eq(ig('D', par(fr(HF+' · C<sup>1,852</sup>','10,65 · L · (πV/4)<sup>1,852</sup>')) + ex(fr('1','2 · 1,852 − 4,87')))) },
-    fl:{ H: eq(ig(HF, '6,107 · b · ' + fr('L · Q<sup>1,75</sup>','D<sup>4,75</sup>'))),
-         Q: eq(ig('Q', par(fr(HF+' · D<sup>4,75</sup>','6,107 · b · L')) + ex(fr('1','1,75')))),
-         L: eq(ig('L', fr(HF+' · D<sup>4,75</sup>','6,107 · b · Q<sup>1,75</sup>'))),
-         R: eq(ig('b', fr(HF+' · D<sup>4,75</sup>','6,107 · Q<sup>1,75</sup> · L'))),
-         D: eq(ig('D', par(fr('6,107 · b · Q<sup>1,75</sup> · L', HF)) + ex(fr('1','4,75')))),
-         DV:eq(ig('D', par(fr(HF,'6,107 · b · L · (πV/4)<sup>1,75</sup>')) + ex(fr('1','2 · 1,75 − 4,75')))) }
+    hw:{ H: eq(ig(HF, '10,65' + QC + sp + fr('L','D<sup>4,87</sup>'))) },
+    fl:{ H: eq(ig(HF, '6,107 · b · ' + fr('L · Q<sup>1,75</sup>','D<sup>4,75</sup>'))) },
+    dw:{ H: eq(ig(HF, 'f · ' + fr('L','D') + sp + '· ' + fr('V<sup>2</sup>','2g'))),
+         CW: eq(ig(fr('1','√f'), '−2 · log' + par(fr('ε','3,7 · D') + '<span class="op">+</span>' + fr('2,51','Re · √f')))) }
   };
   // as abas mostram a equação principal de cada método
   document.querySelector("#tab-hw .eq").innerHTML = ISO.hw.H;
   document.querySelector("#tab-fl .eq").innerHTML = ISO.fl.H;
+  document.querySelector("#tab-dw .eq").innerHTML = ISO.dw.H;
+  document.getElementById("eq-cw").innerHTML = ISO.dw.CW;
 
   function num(el){
     var t = el.value.trim().replace(",",".");
@@ -444,8 +608,80 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   }
   function def(x){ return x !== undefined && x !== null; }
 
-  // ---- as duas equações, isoladas para cada variável -------------------
+  // ---- Darcy-Weisbach com f de Colebrook-White ---------------------------
+  function viscosidade(T){                        // m²/s, interpolação linear na tabela
+    if(T === null || !isFinite(T) || T < 0 || T > 100) return NaN;
+    for(var i = 1; i < AGUA.length; i++){
+      if(T <= AGUA[i][0]){
+        var a = AGUA[i-1], b = AGUA[i];
+        return (a[1] + (b[1]-a[1])*(T-a[0])/(b[0]-a[0]))*1e-6;
+      }
+    }
+    return NaN;
+  }
+  // 1/√f = −2 log(ε/(3,7D) + 2,51/(Re √f)), resolvida em x = 1/√f pelo método de Newton,
+  // partindo da aproximação explícita de Swamee-Jain
+  function colebrook(Re, er){
+    var a = er/3.7, b = 2.51/Re;
+    var x = -2*Math.log10(a + 5.74/Math.pow(Re, 0.9)), it;
+    for(it = 1; it <= 50; it++){
+      var s = a + b*x;
+      var F = x + 2*Math.log10(s);
+      var dF = 1 + 2*b/(s*Math.LN10);
+      var xn = x - F/dF;
+      if(Math.abs(xn - x) <= 1e-12*Math.abs(xn)){ x = xn; break; }
+      x = xn;
+    }
+    return {f:1/(x*x), it:Math.min(it, 50), lam:false};
+  }
+  function fator(Re, er){
+    if(Re < 2300) return {f:64/Re, it:0, lam:true};   // laminar: Hagen-Poiseuille
+    return colebrook(Re, er);
+  }
+  function hfDW(Q, D, L, eps, nu){                  // Q m³/s, D m, L m, ε mm, ν m²/s
+    var V = velocidade(Q, D), Re = V*D/nu;
+    return fator(Re, eps/1000/D).f * L/D * V*V/(2*g);
+  }
+  // bissecção em escala logarítmica para funções monótonas
+  function raiz(fn, alvo, lo, hi, cresce){
+    var flo = fn(lo), fhi = fn(hi);
+    if(cresce ? (alvo < flo || alvo > fhi) : (alvo > flo || alvo < fhi)) return NaN;
+    for(var i = 0; i < 300 && hi/lo - 1 > 1e-14; i++){
+      var mid = Math.sqrt(lo*hi);
+      if((fn(mid) < alvo) === cresce) lo = mid; else hi = mid;
+    }
+    return Math.sqrt(lo*hi);
+  }
+  var erroDW = null;
+  function eqDarcy(inc, v){
+    var nu = v.nu, eps = v.R, V, Re, f, x, er;
+    switch(inc){
+      case "H": return hfDW(v.Q, v.D, v.L, eps, nu);
+      case "L":
+        V = velocidade(v.Q, v.D);
+        f = fator(V*v.D/nu, eps/1000/v.D).f;
+        return v.H*2*g*v.D/(f*V*V);
+      case "Q": return raiz(function(q){ return hfDW(q, v.D, v.L, eps, nu); }, v.H, 1e-12, 1e3, true);
+      case "D": return raiz(function(d){ return hfDW(v.Q, d, v.L, eps, nu); }, v.H, 1e-5, 50, false);
+      case "R":
+        V = velocidade(v.Q, v.D); Re = V*v.D/nu;
+        if(Re < 2300){
+          erroDW = "Com Re = " + fmt(Re, 0) + " o regime é laminar: f = 64/Re não depende da rugosidade, então ε não pode ser calculada.";
+          return NaN;
+        }
+        f = v.H*2*g*v.D/(v.L*V*V); x = 1/Math.sqrt(f);
+        er = 3.7*(Math.pow(10, -x/2) - 2.51*x/Re);   // Colebrook-White isolada para ε/D
+        if(!(er > 0)){
+          erroDW = "A perda de carga informada é menor que a de um tubo hidraulicamente liso (ε = 0) com esses dados; nenhuma rugosidade produz esse valor.";
+          return NaN;
+        }
+        return er*v.D*1000;                          // mm
+    }
+  }
+
+  // ---- as equações, isoladas para cada variável -------------------
   function eqPerda(inc, v){
+    if(metodo === "dw") return eqDarcy(inc, v);
     var M = MET[metodo], K;
     if(inc !== "R") K = M.k(v.R);
     switch(inc){
@@ -464,14 +700,16 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   var ESC = document.getElementById("escolha");
   var SIMB = {Q:"Q", D:"D", L:"L", H:"hf"};
   function simbVar(k){ return k === "R" ? MET[metodo].sym : SIMB[k]; }
+  function nomeR(){ return metodo === "dw" ? "rugosidade ε" : "coeficiente " + MET[metodo].sym; }
   function artVar(k){
     return {Q:"a vazão", D:"o diâmetro", L:"o comprimento", H:"a perda de carga",
-            R:"o coeficiente " + MET[metodo].sym}[k];
+            R:(metodo === "dw" ? "a " : "o ") + nomeR()}[k];
   }
   var NOVO = {
     Q:function(){ return "Nova vazão"; },
     D:function(){ return "Novo diâmetro"; }, L:function(){ return "Novo comprimento"; },
-    R:function(){ return "Novo coeficiente " + MET[metodo].sym; }, H:function(){ return "Nova perda de carga"; }
+    R:function(){ return metodo === "dw" ? "Nova rugosidade ε" : "Novo coeficiente " + MET[metodo].sym; },
+    H:function(){ return "Nova perda de carga"; }
   };
   function numStr(x){ return String(Number(x.toPrecision(6))); }
   function vazio(k){ return EL[k].value.trim() === ""; }
@@ -485,7 +723,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     }
     caixa.style.display = "none";
     ESC.hidden = false;
-    var fem = (k === "Q" || k === "H");
+    var fem = (k === "Q" || k === "H" || (k === "R" && metodo === "dw"));
     document.getElementById("esc-tit").textContent = "Você alterou " + artVar(k) +
       (eraCalc ? (fem ? ", que tinha sido calculada." : ", que tinha sido calculado.") : ".");
     var cand = vazio(k) ? [] : ORDEM.filter(function(c){ return c !== k; });
@@ -521,7 +759,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     };
   }
 
-  // saídas calculadas (não editáveis): V e J
+  // saídas calculadas (não editáveis): V, J e, em Darcy-Weisbach, Re e f
   function saida(k, val, dec){
     var F = document.getElementById("campo-"+k), I = document.getElementById("f-"+k);
     var b = F.querySelector(".badge");
@@ -536,11 +774,41 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     b.textContent = "calculado";
     b.style.top = (I.offsetTop + I.offsetHeight/2) + "px";
   }
+  function regime(Re){ return Re < 2300 ? "laminar" : (Re <= 4000 ? "crítico" : "turbulento"); }
+  function descDW(Re, F, er){
+    var dRe = document.querySelector("#campo-Re .desc"), dF = document.querySelector("#campo-f .desc");
+    var CR = document.getElementById("campo-reg"), IR = document.getElementById("f-reg"), dR = CR.querySelector(".desc");
+    if(Re === null || !isFinite(Re) || Re <= 0){
+      dRe.textContent = "Número de Reynolds"; dF.textContent = "Colebrook-White";
+      IR.placeholder = "—"; CR.classList.remove("unknown","calc"); dR.textContent = "Laminar < 2300 · turbulento > 4000";
+      return;
+    }
+    var r = regime(Re), t = r === "laminar" ? "Re < 2300" : (r === "crítico" ? "2300 ≤ Re ≤ 4000 · escoamento instável" : "Re > 4000");
+    if(Re > 4000 && F && er !== null){
+      var epl = er*Re*Math.sqrt(F.f/8);             // rugosidade adimensional ε⁺ = ε·u*/ν
+      t += epl < 5 ? " · tubo hidraulicamente liso" : (epl > 70 ? " · tubo hidraulicamente rugoso" : " · transição liso-rugoso");
+    }
+    dRe.textContent = "Número de Reynolds";
+    IR.placeholder = r.charAt(0).toUpperCase() + r.slice(1); CR.classList.add("unknown","calc"); dR.textContent = t;
+    dF.textContent = !F ? "Colebrook-White" : (F.lam ? "f = 64/Re (laminar)" : "Colebrook-White · " + F.it + (F.it === 1 ? " iteração" : " iterações"));
+  }
+  function saidasDW(Q, D, eps, nu){                  // prévia de Re e f com os dados já digitados
+    var Re = velocidade(Q, D)*D/nu, F = null, er = null;
+    saida("Re", Re, 0);
+    if(def(eps) && eps >= 0){ er = eps/1000/D; F = fator(Re, er); saida("f", F.f, 5); }
+    descDW(Re, F, er);
+  }
+  function mostraNu(nu){
+    document.getElementById("desc-T").textContent = isFinite(nu)
+      ? "ν = " + fmt(nu*1e6, 3) + " × 10⁻⁶ m²/s"
+      : "Informe um valor entre 0 e 100 °C";
+  }
   // aviso quando o diâmetro fica fora da faixa recomendada para a equação
   var AV = document.getElementById("aviso-faixa"), AVt = document.getElementById("aviso-txt"),
       AVb = document.getElementById("aviso-btn"), avisoPara = null;
   function faixa(Dmm, calculado){
     avisoPara = null;
+    if(metodo === "dw"){ AV.hidden = true; return; }   // Darcy-Weisbach vale para qualquer diâmetro
     if(Dmm !== null && isFinite(Dmm) && Dmm > 0){
       var qual = calculado ? "O diâmetro calculado" : "O diâmetro informado";
       var d = fmt(Dmm, 2) + " mm";
@@ -548,11 +816,12 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
         AVt.textContent = qual + " (" + d + ") é menor que 50 mm, fora da faixa recomendada para Hazen-Williams. Recomenda-se fazer os cálculos pela equação de Flamant.";
         avisoPara = "fl";
       } else if(metodo === "hw" && Dmm > 300){
-        AVt.textContent = qual + " (" + d + ") é maior que 300 mm, fora da faixa recomendada para Hazen-Williams (50 a 300 mm).";
+        AVt.textContent = qual + " (" + d + ") é maior que 300 mm, fora da faixa recomendada para Hazen-Williams (50 a 300 mm). Recomenda-se a equação universal de Darcy-Weisbach.";
+        avisoPara = "dw";
       } else if(metodo === "fl" && Dmm >= 50){
         AVt.textContent = qual + " (" + d + ") não é menor que 50 mm, fora da faixa recomendada para Flamant." +
-          (Dmm <= 300 ? " Recomenda-se fazer os cálculos pela equação de Hazen-Williams." : "");
-        if(Dmm <= 300) avisoPara = "hw";
+          (Dmm <= 300 ? " Recomenda-se fazer os cálculos pela equação de Hazen-Williams." : " Recomenda-se a equação universal de Darcy-Weisbach.");
+        avisoPara = Dmm <= 300 ? "hw" : "dw";
       } else { AV.hidden = true; return; }
       AVb.hidden = !avisoPara;
       if(avisoPara) AVb.textContent = "Calcular com " + MET[avisoPara].nome;
@@ -564,9 +833,10 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   AVb.addEventListener("click", function(){ if(avisoPara) trocaMetodo(avisoPara); });
 
   function velocidade(Q, Dm){ return 4*Q/(Math.PI*Dm*Dm); }
+  function naoPositivo(k, x){ return x < 0 || (x === 0 && !(k === "R" && metodo === "dw")); }   // ε = 0: tubo liso
 
   function calcula(){
-    sincSel();
+    sincSel(); sincTubo();
     if(pend){
       var outros = ORDEM.filter(function(c){ return c !== pend.k && c !== pend.inc && vazio(c); });
       if(pend.k === pend.inc && vazio(pend.k)) pend = null;          // apagou: volta a ser calculada
@@ -587,52 +857,69 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       else vals[k] = x;
     });
 
-    saida("V", null); saida("J", null); faixa(null);
+    saida("V", null); saida("J", null); saida("Re", null); saida("f", null); descDW(null); faixa(null);
     caixa.style.display = "";
     Array.prototype.forEach.call(campos.querySelectorAll(".field"), function(f){
-      var isInc = vazios.length === 1 && vazios[0] === f.dataset.k;
+      var k = f.dataset.k;
+      if(ORDEM.indexOf(k) < 0) return;                  // temperatura: dado auxiliar, nunca incógnita
+      var isInc = vazios.length === 1 && vazios[0] === k;
       f.classList.toggle("unknown", isInc);
       f.classList.remove("calc");
-      EL[f.dataset.k].placeholder = "—";
+      EL[k].placeholder = "—";
       var b = f.querySelector(".badge");
       if(isInc && !b){ b = document.createElement("span"); b.className="badge"; f.appendChild(b); }
       else if(!isInc && b) b.remove();
-      if(isInc){ var inp = EL[f.dataset.k]; b.textContent = "incógnita"; b.style.top = (inp.offsetTop + inp.offsetHeight/2) + "px"; }
+      if(isInc){ var inp = EL[k]; b.textContent = "incógnita"; b.style.top = (inp.offsetTop + inp.offsetHeight/2) + "px"; }
     });
+
+    var nu = null;
+    if(metodo === "dw"){ nu = viscosidade(num(TEMP)); mostraNu(nu); }
 
     if(def(vals.L) && def(vals.H) && vals.L > 0 && vals.H > 0) saida("J", vals.H/vals.L, 5);
     if(def(vals.D) && vals.D > 0) faixa(vals.D);
-    if(def(vals.Q) && def(vals.D) && vals.Q > 0 && vals.D > 0) saida("V", velocidade(vals.Q/3600, vals.D/1000), 3);
+    if(def(vals.Q) && def(vals.D) && vals.Q > 0 && vals.D > 0){
+      saida("V", velocidade(vals.Q/3600, vals.D/1000), 3);
+      if(metodo === "dw" && isFinite(nu)) saidasDW(vals.Q/3600, vals.D/1000, vals.R, nu);
+    }
 
     if(invalido){ falha("O valor de " + META[invalido].nome.toLowerCase() + " não é um número válido."); return; }
-    var ruim = Object.keys(vals).find(function(k){ return vals[k] <= 0; });
-    if(ruim){ falha("Todos os valores precisam ser maiores que zero: revise " + META[ruim].nome.toLowerCase() + "."); return; }
+    var ruim = Object.keys(vals).find(function(k){ return naoPositivo(k, vals[k]); });
+    if(ruim){
+      falha(metodo === "dw" && ruim === "R" ? "A rugosidade não pode ser negativa."
+        : "Todos os valores precisam ser maiores que zero: revise " + META[ruim].nome.toLowerCase() + ".");
+      return;
+    }
+    if(metodo === "dw" && !isFinite(nu)){
+      falha("Informe a temperatura da água entre 0 e 100 °C: ela define a viscosidade cinemática.");
+      return;
+    }
     if(vazios.length === ORDEM.length){
       neutro(""); caixa.style.display = "none";
       return;
     }
     if(vazios.length > 1){
       neutro("Deixe em branco apenas um campo, a variável a calcular. Agora há " + vazios.length + ": " +
-             vazios.map(function(k){ return k === "R" ? "coeficiente " + MET[metodo].sym : META[k].nome.toLowerCase(); }).join(", ") + ".");
+             vazios.map(function(k){ return k === "R" ? nomeR() : META[k].nome.toLowerCase(); }).join(", ") + ".");
       return;
     }
 
-    // unidades de trabalho: Q em m³/s (entrada em m³/h), D em m
+    // unidades de trabalho: Q em m³/s (entrada em m³/h), D em m; ε segue em mm
     var v = {
       Q: def(vals.Q) ? vals.Q/3600 : undefined,
       D: def(vals.D) ? vals.D/1000 : undefined,
-      L: vals.L, R: vals.R, H: vals.H
+      L: vals.L, R: vals.R, H: vals.H, nu: nu
     };
 
     var resolvidas = [];
+    erroDW = null;
     if(vazios.length === 1){
       v[vazios[0]] = eqPerda(vazios[0], v);
       resolvidas.push(vazios[0]);
     }
     v.V = velocidade(v.Q, v.D);
 
-    var falhou = ORDEM.concat("V").find(function(k){ return !isFinite(v[k]) || v[k] <= 0; });
-    if(falhou){ falha("O resultado não é fisicamente válido. Revise os dados de entrada."); return; }
+    var falhou = ORDEM.concat("V").find(function(k){ return !isFinite(v[k]) || naoPositivo(k, v[k]); });
+    if(falhou){ falha(erroDW || "O resultado não é fisicamente válido. Revise os dados de entrada."); return; }
 
     // verificação: todos os campos preenchidos
     var checks = [];
@@ -641,6 +928,11 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       checks.push(Math.abs(dH) > 1e-3*Math.max(1, v.H)
         ? "A perda informada não bate com a calculada, " + fmt(hc,3) + " m (diferença de " + fmt(dH,3) + " m)."
         : "Confere: a perda calculada é " + fmt(hc,3) + " m, diferença de " + fmt(dH,4) + " m.");
+    } else if(metodo === "dw" && vazios[0] !== "H"){
+      // Q ou D resolvidos por bissecção: o salto de f entre laminar e turbulento pode impedir a solução exata
+      var hv = eqPerda("H", v);
+      if(Math.abs(hv - v.H) > 1e-3*v.H)
+        checks.push("Não há solução exata: a perda informada cai no salto do fator de atrito entre os regimes laminar e turbulento (Re ≈ 2300). O valor mostrado é o limite entre os dois regimes.");
     }
 
     acerta(resolvidas, v, [], checks, vazios.length === 0);
@@ -652,7 +944,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   function exibe(k, v){
     if(k === "Q") return {val:v.Q*3600, un:"m³/h"};
     if(k === "D") return {val:v.D*1000, un:"mm"};
-    if(k === "R") return {val:v.R, un:""};
+    if(k === "R") return {val:v.R, un:(metodo === "dw" ? "mm" : "")};
     return {val:v[k], un:META[k].un};
   }
 
@@ -673,19 +965,14 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
     var solved = document.getElementById("res-solved");
     solved.style.display = "none";
-    if(false){
-      solved.innerHTML = "<div><div class='name'>Todos os campos preenchidos</div>" +
-        "<div class='value' style='font-size:1.15rem'>Verificação dos dados</div></div>";
-    } else {
-      var lista = unicas.filter(function(k){ return k !== "V"; });
-      if(!lista.length) lista = unicas;
-      solved.innerHTML = lista.map(function(k){
-        var e = exibe(k, v);
-        var nome = (k === "R") ? MET[metodo].rotulo : META[k].nome;
-        return "<div><div class='name'>"+nome+"</div>"+
-               "<div class='value'>"+fmt(e.val, META[k].dec)+"<span class='u'>"+e.un+"</span></div></div>";
-      }).join("");
-    }
+    var lista = unicas.filter(function(k){ return k !== "V"; });
+    if(!lista.length) lista = unicas;
+    solved.innerHTML = lista.map(function(k){
+      var e = exibe(k, v);
+      var nome = (k === "R") ? MET[metodo].rotulo : META[k].nome;
+      return "<div><div class='name'>"+nome+"</div>"+
+             "<div class='value'>"+fmt(e.val, META[k].dec)+"<span class='u'>"+e.un+"</span></div></div>";
+    }).join("");
 
     document.getElementById("res-form").innerHTML = "";
 
@@ -696,17 +983,23 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       ultimo = {inc: unicas[0], val: exibe(unicas[0], v).val};
       rawAnt = {}; ORDEM.forEach(function(k){ rawAnt[k] = EL[k].value; });
     }
-    var itens = [];
-    var dl = document.getElementById("res-der");
-    dl.innerHTML = itens.map(function(p){
-      return "<div><dt>"+p[0]+"</dt><dd>"+p[1]+"</dd></div>";
-    }).join("");
 
     var notas = checks.slice();
+    if(metodo === "dw"){
+      var Re = v.V*v.D/v.nu, er = v.R/1000/v.D, F = fator(Re, er);
+      saida("Re", Re, 0); saida("f", F.f, 5); descDW(Re, F, er);
+      if(Re < 2300) notas.push("Regime laminar (Re < 2300): f = 64/Re, que não depende da rugosidade.");
+      else if(Re <= 4000) notas.push("Zona crítica (2300 ≤ Re ≤ 4000): escoamento instável; o f de Colebrook-White é apenas uma estimativa.");
+    }
+    var dl = document.getElementById("res-der");
+    dl.innerHTML = "";
+
     if(verificacao) notas.unshift("Todos os campos preenchidos: conferindo os dados.");
     if(resolvidas.indexOf("R") >= 0){
       var mp = maisProximo(v.R);
-      notas.push("Material com coeficiente mais próximo: " + mp[0] + " (" + MET[metodo].sym + " = " + vFmt(mp[1]) + ").");
+      notas.push(metodo === "dw"
+        ? "Material com rugosidade mais próxima: " + mp[0] + " (ε = " + vFmt(mp[1]) + " mm)."
+        : "Material com coeficiente mais próximo: " + mp[0] + " (" + MET[metodo].sym + " = " + vFmt(mp[1]) + ").");
     }
     if(!notas.length) caixa.style.display = "none";
     notas.forEach(function(t){
@@ -719,27 +1012,30 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   function trocaMetodo(m){
     if(m === metodo) return;          // clicou na aba que já está aberta
     metodo = m;
-    document.getElementById("tab-hw").setAttribute("aria-selected", m === "hw");
-    document.getElementById("tab-fl").setAttribute("aria-selected", m === "fl");
+    ["hw","fl","dw"].forEach(function(x){ document.getElementById("tab-"+x).setAttribute("aria-selected", x === m); });
     var M = MET[m];
     document.getElementById("sym-R").textContent = M.sym;
-    document.getElementById("nome-R").textContent = "Coef. " + M.sym;
+    document.getElementById("nome-R").textContent = M.curto;
     document.getElementById("un-R").textContent = M.un;
-    montaSel();
-    // trocar de método começa um novo cálculo, para não levar dados do outro método
+    ["campo-T","campo-Re","campo-f","campo-reg","info-dw"].forEach(function(id){ document.getElementById(id).hidden = (m !== "dw"); });
+    montaSel(); montaTubos();
+    // trocar de método começa um novo cálculo, para não levar dados do outro método;
+    // a tubulação escolhida continua e preenche o coeficiente do novo método
     ORDEM.forEach(function(k){ EL[k].value = ""; });
     SEL.value = "";
     pend = null; ultimo = null;
-    calcula();
+    if(SELT.value) aplicaTubo(SELT.value); else calcula();
   }
 
   document.getElementById("tab-hw").addEventListener("click", function(){ trocaMetodo("hw"); });
   document.getElementById("tab-fl").addEventListener("click", function(){ trocaMetodo("fl"); });
+  document.getElementById("tab-dw").addEventListener("click", function(){ trocaMetodo("dw"); });
   ORDEM.forEach(function(k){
     EL[k].addEventListener("input", aoDigitar(k));
     EL[k].addEventListener("focus", aoFocar);
   });
   SEL.addEventListener("focus", aoFocar);
+  TEMP.addEventListener("input", function(){ calcula(); });   // muda ν e recalcula a mesma incógnita
   window.addEventListener("resize", function(){
     Array.prototype.forEach.call(document.querySelectorAll("#painel .field .badge"), function(b){
       var inp = b.parentNode.querySelector("input"); b.style.top = (inp.offsetTop + inp.offsetHeight/2) + "px";
@@ -749,12 +1045,279 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
   document.getElementById("btn-limpa").addEventListener("click", function(){
     ORDEM.forEach(function(k){ EL[k].value = ""; });
+    SELT.value = "";
     pend = null; ultimo = null;
     calcula();
     EL.Q.focus();
   });
 
+  // ---- cadastro de tubulações (guardado neste navegador) --------------
+  var CHAVE = "ei-tubos";
+  var UNS = ["mca","bar","kgf/cm²","MPa"];
+  var BASE = [    // [material, ε (mm), C, b]
+    ["PVC rígido", 0.0015, 150, 0.000135],
+    ["Polietileno (PE, PEAD, PEBD)", 0.0015, 150, 0.000135],
+    ["Cobre, latão", 0.0015, 140, null],
+    ["Alumínio", 0.0015, 135, null],
+    ["Cimento amianto", 0.025, 140, null],
+    ["Aço comercial novo", 0.045, 130, 0.000185],
+    ["Aço ou ferro galvanizado", 0.15, 125, 0.000185],
+    ["Ferro fundido novo", 0.26, 130, 0.000185],
+    ["Ferro fundido ou aço usado", 1.5, null, 0.00023],
+    ["Concreto liso", 0.3, 130, 0.000185]
+  ];
+  var TUBOS = [], salvaOk = true;
+  function novoId(){ return "t" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function nOuNull(x){
+    if(x === "" || x === null || x === undefined) return null;
+    var v = Number(String(x).trim().replace(",", "."));
+    return isFinite(v) ? v : null;
+  }
+  function limpaTubos(a){
+    if(!Array.isArray(a)) return [];
+    return a.map(function(t){
+      if(!t || typeof t !== "object") return null;
+      var o = {
+        id: (typeof t.id === "string" && t.id) ? t.id : novoId(),
+        mat: String(t.mat || "").trim().slice(0, 120),
+        dn: String(t.dn === null || t.dn === undefined ? "" : t.dn).trim().slice(0, 20),
+        pn: nOuNull(t.pn), pnUn: UNS.indexOf(t.pnUn) >= 0 ? t.pnUn : "mca",
+        de: nOuNull(t.de), di: nOuNull(t.di), eps: nOuNull(t.eps), C: nOuNull(t.C), b: nOuNull(t.b)
+      };
+      if(!o.mat || !(o.de > 0) || !(o.di > 0) || o.di >= o.de) return null;
+      if(o.pn !== null && o.pn <= 0) o.pn = null;
+      if(o.eps !== null && o.eps < 0) o.eps = null;
+      if(o.C !== null && o.C <= 0) o.C = null;
+      if(o.b !== null && o.b <= 0) o.b = null;
+      return o;
+    }).filter(Boolean);
+  }
+  try{ var guardado = localStorage.getItem(CHAVE); if(guardado) TUBOS = limpaTubos(JSON.parse(guardado)); }
+  catch(e){ salvaOk = false; }
+  function grava(){
+    try{ localStorage.setItem(CHAVE, JSON.stringify(TUBOS)); salvaOk = true; }
+    catch(e){ salvaOk = false; }
+    avisoArmaz();
+  }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+  function acha(id){ for(var i = 0; i < TUBOS.length; i++) if(TUBOS[i].id === id) return TUBOS[i]; return null; }
+  function coefTubo(t){ return t[MET[metodo].tubo]; }
+  function nomeTubo(t){
+    return t.mat + (t.dn ? " DN " + t.dn : "") + (t.pn !== null ? " PN " + vFmt(t.pn) + " " + t.pnUn : "");
+  }
+  function montaTubos(){
+    var atual = SELT.value, M = MET[metodo];
+    SELT.innerHTML = (TUBOS.length
+        ? '<option value="">Nenhuma: digitar o diâmetro e o coeficiente</option>'
+        : '<option value="">Nenhuma tubulação cadastrada: use o botão Cadastro de tubulações</option>') +
+      TUBOS.map(function(t){
+        var c = coefTubo(t);
+        return '<option value="'+esc(t.id)+'">'+esc(nomeTubo(t))+' — Di '+fmt(t.di, 2)+' mm · '+
+          (c !== null ? M.sym+' = '+vFmt(c)+(metodo === "dw" ? " mm" : "") : 'sem '+M.sym+' cadastrado')+'</option>';
+      }).join("");
+    SELT.value = acha(atual) ? atual : "";
+    document.getElementById("tubo-un").textContent = "preenche o diâmetro interno e " +
+      (metodo === "dw" ? "a rugosidade ε" : "o coeficiente " + M.sym);
+  }
+  function aplicaTubo(id){
+    var t = acha(id); if(!t) return;
+    SELT.value = id;
+    EL.D.value = numStr(t.di);
+    var c = coefTubo(t);
+    if(c !== null) EL.R.value = numStr(c);
+    // dados novos de tubulação: começa um cálculo novo com as demais variáveis mantidas
+    pend = null; ultimo = null; haviaResultado = false;
+    calcula();
+  }
+  function sincTubo(){                              // desmarca se D ou o coeficiente forem alterados à mão
+    if(!SELT.value) return;
+    var t = acha(SELT.value), d = num(EL.D), r = num(EL.R), c;
+    if(!t){ SELT.value = ""; return; }
+    c = coefTubo(t);
+    if(d === null || isNaN(d) || !igual(d, t.di) || (c !== null && r !== null && !igual(r, c))) SELT.value = "";
+  }
+  SELT.addEventListener("change", function(){ if(SELT.value) aplicaTubo(SELT.value); });
+
+  var CAD = document.getElementById("cad"), FORM = document.getElementById("cad-form"),
+      CM = document.getElementById("cad-msg"), editId = null;
+  var CF = {};
+  ["base","mat","dn","pn","pnun","de","di","eps","C","b"].forEach(function(k){ CF[k] = document.getElementById("cad-"+k); });
+  CF.base.innerHTML = '<option value="">Escolha um material para sugerir ε, C e b</option>' +
+    BASE.map(function(m, i){
+      return '<option value="'+i+'">'+m[0]+' — ε = '+vFmt(m[1])+' mm' + (m[2] ? ' · C = '+m[2] : '') +
+        (m[3] ? ' · b = '+vFmt(m[3]) : '') + '</option>';
+    }).join("");
+  CF.base.addEventListener("change", function(){
+    if(CF.base.value === "") return;
+    var m = BASE[+CF.base.value];
+    if(!CF.mat.value.trim()) CF.mat.value = m[0];
+    CF.eps.value = m[1]; CF.C.value = m[2] === null ? "" : m[2]; CF.b.value = m[3] === null ? "" : m[3];
+  });
+  function espessura(){
+    var de = nOuNull(CF.de.value), di = nOuNull(CF.di.value);
+    document.getElementById("cad-e").textContent = "Espessura da parede: " +
+      (de > 0 && di > 0 && di < de ? fmt((de - di)/2, 2) + " mm" : "—");
+  }
+  CF.de.addEventListener("input", espessura); CF.di.addEventListener("input", espessura);
+
+  function avisoArmaz(){
+    document.getElementById("cad-armaz").textContent = salvaOk
+      ? "As tubulações ficam salvas neste navegador, neste aparelho. Para usar em outro aparelho, exporte o cadastro e importe lá."
+      : "Este navegador não permitiu salvar: o cadastro vale só enquanto a página estiver aberta. Use Exportar para guardá-lo.";
+  }
+  function avisa(t, tipo){ CM.textContent = t; CM.className = "cad-msg" + (tipo ? " " + tipo : ""); }
+  function limpaForm(){
+    FORM.reset(); editId = null; espessura();
+    document.getElementById("cad-salva").textContent = "Adicionar tubulação";
+    document.getElementById("cad-cancela").hidden = true;
+  }
+  function renderLista(){
+    var L = document.getElementById("cad-lista");
+    if(!TUBOS.length){ L.innerHTML = '<h3>Tubulações cadastradas</h3><p class="vazio">Nenhuma tubulação cadastrada ainda.</p>'; return; }
+    function c(x, d){ return x === null ? "—" : fmt(x, d); }
+    L.innerHTML = '<h3>Tubulações cadastradas (' + TUBOS.length + ')</h3><table class="cad-tab"><thead><tr>' +
+      '<th>Material</th><th>DN</th><th>PN</th><th>De (mm)</th><th>Di (mm)</th><th>e (mm)</th>' +
+      '<th>ε (mm)</th><th>C</th><th>b</th><th></th></tr></thead><tbody>' +
+      TUBOS.map(function(t){
+        return '<tr><td class="mt">'+esc(t.mat)+'</td><td>'+(t.dn ? esc(t.dn) : "—")+'</td>'+
+          '<td>'+(t.pn !== null ? vFmt(t.pn)+" "+t.pnUn : "—")+'</td>'+
+          '<td class="n">'+fmt(t.de, 2)+'</td><td class="n">'+fmt(t.di, 2)+'</td><td class="n">'+fmt((t.de - t.di)/2, 2)+'</td>'+
+          '<td class="n">'+c(t.eps, 6)+'</td><td class="n">'+c(t.C, 1)+'</td><td class="n">'+c(t.b, 7)+'</td>'+
+          '<td class="bt"><button type="button" class="mini" data-a="usar" data-id="'+esc(t.id)+'">Usar</button>'+
+          '<button type="button" class="mini" data-a="edit" data-id="'+esc(t.id)+'">Editar</button>'+
+          '<button type="button" class="mini del" data-a="del" data-id="'+esc(t.id)+'">Excluir</button></td></tr>';
+      }).join("") + '</tbody></table>';
+  }
+  document.getElementById("cad-lista").addEventListener("click", function(e){
+    var bt = e.target.closest("button"); if(!bt) return;
+    var t = acha(bt.dataset.id); if(!t) return;
+    if(bt.dataset.a === "usar"){ fechaCad(); aplicaTubo(t.id); }
+    else if(bt.dataset.a === "edit"){
+      editId = t.id; CF.base.value = "";
+      CF.mat.value = t.mat; CF.dn.value = t.dn; CF.pn.value = t.pn === null ? "" : t.pn; CF.pnun.value = t.pnUn;
+      CF.de.value = t.de; CF.di.value = t.di;
+      CF.eps.value = t.eps === null ? "" : t.eps; CF.C.value = t.C === null ? "" : t.C; CF.b.value = t.b === null ? "" : t.b;
+      espessura();
+      document.getElementById("cad-salva").textContent = "Salvar alterações";
+      document.getElementById("cad-cancela").hidden = false;
+      avisa("Editando: " + nomeTubo(t) + ".", "");
+      CF.mat.focus();
+    }
+    else if(bt.dataset.a === "del"){
+      if(!confirm("Excluir a tubulação " + nomeTubo(t) + "?")) return;
+      TUBOS = TUBOS.filter(function(x){ return x.id !== t.id; });
+      if(editId === t.id) limpaForm();
+      grava(); renderLista(); montaTubos();
+      avisa("Tubulação excluída.", "ok");
+    }
+  });
+  FORM.addEventListener("submit", function(e){
+    e.preventDefault();
+    var t = {
+      id: editId || novoId(), mat: CF.mat.value.trim(), dn: CF.dn.value.trim(),
+      pn: nOuNull(CF.pn.value), pnUn: CF.pnun.value,
+      de: nOuNull(CF.de.value), di: nOuNull(CF.di.value),
+      eps: nOuNull(CF.eps.value), C: nOuNull(CF.C.value), b: nOuNull(CF.b.value)
+    };
+    var erro = !t.mat ? "Informe o material ou uma descrição da tubulação."
+      : !(t.de > 0) ? "Informe o diâmetro externo, maior que zero."
+      : !(t.di > 0) ? "Informe o diâmetro interno, maior que zero."
+      : t.di >= t.de ? "O diâmetro interno precisa ser menor que o externo."
+      : (t.pn !== null && t.pn <= 0) ? "A pressão nominal precisa ser maior que zero."
+      : (t.eps !== null && t.eps < 0) ? "A rugosidade ε não pode ser negativa."
+      : (t.C !== null && t.C <= 0) ? "O coeficiente C precisa ser maior que zero."
+      : (t.b !== null && t.b <= 0) ? "O coeficiente b precisa ser maior que zero."
+      : null;
+    if(erro){ avisa(erro, "erro"); return; }
+    var aviso = (t.eps === null && t.C === null && t.b === null)
+      ? " Sem ε, C ou b cadastrados, ela preenche apenas o diâmetro." : "";
+    if(editId){
+      TUBOS = TUBOS.map(function(x){ return x.id === editId ? t : x; });
+      avisa("Alterações salvas: " + nomeTubo(t) + "." + aviso, "ok");
+    } else {
+      TUBOS.push(t);
+      avisa("Tubulação adicionada: " + nomeTubo(t) + "." + aviso, "ok");
+    }
+    grava(); limpaForm(); renderLista(); montaTubos();
+    calcula();
+  });
+  document.getElementById("cad-cancela").addEventListener("click", function(){ limpaForm(); avisa("", ""); });
+
+  function abreCad(){
+    avisoArmaz(); renderLista(); avisa("", "");
+    if(typeof CAD.showModal === "function") CAD.showModal(); else CAD.setAttribute("open", "");
+    CF.base.focus();
+  }
+  function fechaCad(){ if(typeof CAD.close === "function") CAD.close(); else CAD.removeAttribute("open"); }
+  document.getElementById("btn-cad").addEventListener("click", abreCad);
+  document.getElementById("cad-fecha").addEventListener("click", fechaCad);
+  CAD.addEventListener("click", function(e){ if(e.target === CAD) fechaCad(); });   // clique fora fecha
+
+  document.getElementById("cad-exp").addEventListener("click", function(){
+    if(!TUBOS.length){ avisa("Não há tubulações para exportar.", "erro"); return; }
+    // texto: uma tubulação por linha, colunas separadas por ";" e decimais com vírgula
+    function cel(x){ return x === null || x === undefined ? "" : String(x).replace(/[;\r\n]+/g, " ").trim(); }
+    function numCel(x){ return x === null ? "" : vFmt(x); }
+    var linhas = [COLS_TXT.join(";")].concat(TUBOS.map(function(t){
+      return [cel(t.mat), cel(t.dn), numCel(t.pn), t.pnUn, numCel(t.de), numCel(t.di), numCel(t.eps), numCel(t.C), numCel(t.b)].join(";");
+    }));
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob(["\uFEFF" + linhas.join("\r\n") + "\r\n"], {type:"text/plain;charset=utf-8"}));
+    a.download = "tubulacoes_esalq_irriga.txt";
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    avisa("Cadastro exportado (" + TUBOS.length + " tubulações).", "ok");
+  });
+  var COLS_TXT = ["Material","DN","PN","Unidade PN","De (mm)","Di (mm)","Rugosidade ε (mm)","C","b"];
+  function unPN(u){                                 // aceita grafias comuns: m.c.a., kgf/cm2...
+    var k = String(u || "").toLowerCase().replace(/[\s.]/g, "").replace("cm2", "cm²");
+    for(var i = 0; i < UNS.length; i++) if(UNS[i].toLowerCase() === k) return UNS[i];
+    return "mca";
+  }
+  function leTxt(txt){                              // uma tubulação por linha, colunas separadas por ";"
+    var lista = [], ignoradas = 0;
+    txt.split(/\r?\n/).forEach(function(l){
+      if(!l.trim()) return;
+      var c = l.split(";").map(function(x){ return x.trim(); });
+      if(/^material$/i.test(c[0])) return;          // linha de cabeçalho
+      var t = limpaTubos([{mat:c[0], dn:c[1], pn:c[2], pnUn:unPN(c[3]), de:c[4], di:c[5], eps:c[6], C:c[7], b:c[8]}])[0];
+      if(t) lista.push(t); else ignoradas++;
+    });
+    return {tubos:lista, ignoradas:ignoradas};
+  }
+  var ARQ = document.getElementById("cad-arq");
+  document.getElementById("cad-imp").addEventListener("click", function(){ ARQ.value = ""; ARQ.click(); });
+  ARQ.addEventListener("change", function(){
+    var f = ARQ.files && ARQ.files[0]; if(!f) return;
+    var rd = new FileReader();
+    rd.onload = function(){
+      var txt = String(rd.result).replace(/^\uFEFF/, ""), novos, ignoradas = 0, j;
+      if(/^\s*[\[{]/.test(txt)){                    // cadastros antigos, exportados em .json
+        try{ j = JSON.parse(txt); }catch(e){ avisa("O arquivo parece JSON, mas não é válido.", "erro"); return; }
+        novos = limpaTubos(Array.isArray(j) ? j : (j && j.tubulacoes));
+      } else {
+        var r = leTxt(txt); novos = r.tubos; ignoradas = r.ignoradas;
+      }
+      if(!novos.length){ avisa("Nenhuma tubulação válida encontrada no arquivo. Confira se as colunas seguem a ordem: " + COLS_TXT.join("; ") + ".", "erro"); return; }
+      var n = 0;
+      novos.forEach(function(t){
+        var repetida = TUBOS.some(function(x){
+          return x.mat === t.mat && x.dn === t.dn && x.pn === t.pn && x.de === t.de && x.di === t.di;
+        });
+        if(repetida) return;
+        if(acha(t.id)) t.id = novoId();
+        TUBOS.push(t); n++;
+      });
+      grava(); renderLista(); montaTubos();
+      avisa(n + (n === 1 ? " tubulação importada" : " tubulações importadas") +
+        (novos.length > n ? " (" + (novos.length - n) + " já existiam)" : "") +
+        (ignoradas ? "; " + ignoradas + (ignoradas === 1 ? " linha inválida ignorada" : " linhas inválidas ignoradas") + " (confira material, De e Di)." : "."), "ok");
+    };
+    rd.readAsText(f);
+  });
+
   montaSel();
+  montaTubos();
   calcula();
 })();
 
@@ -765,9 +1328,9 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   try{
     var base = location.href.split("#")[0];
     var mf = {
-      name: "Perda de carga — ESALQ Irriga v1.2",
-      short_name: "ESALQ Irriga v1.2",
-      description: "Calculadora de perda de carga em condutos forçados (Hazen-Williams e Flamant).",
+      name: "Perda de carga — ESALQ Irriga v1.3",
+      short_name: "ESALQ Irriga v1.3",
+      description: "Calculadora de perda de carga em condutos forçados (Hazen-Williams, Flamant e Darcy-Weisbach).",
       start_url: base,
       scope: base,
       id: base,
