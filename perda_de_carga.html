@@ -272,7 +272,7 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 <div class="tabs" role="tablist">
   <button class="tab" id="tab-hw" role="tab" aria-selected="true" aria-controls="painel">
     Hazen-Williams
-    <span class="faixa">50 mm ≤ Diâmetro ≤ 300 mm</span>
+    <span class="faixa">50 mm ≤ Diâmetro ≤ 3000 mm</span>
     <span class="eq"></span>
   </button>
   <button class="tab" id="tab-fl" role="tab" aria-selected="false" aria-controls="painel">
@@ -390,7 +390,7 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     <h2 id="cad-tit">Cadastro de tubulações</h2>
     <button type="button" class="act" id="cad-fecha">Fechar</button>
   </div>
-  <p class="hint" id="cad-armaz"></p>
+  <p class="hint" id="cad-armaz" style="white-space:pre-line"></p>
   <form id="cad-form" novalidate>
     <div class="grid">
       <div class="field mat-field">
@@ -815,13 +815,13 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       if(metodo === "hw" && Dmm < 50){
         AVt.textContent = qual + " (" + d + ") é menor que 50 mm, fora da faixa recomendada para Hazen-Williams. Recomenda-se fazer os cálculos pela equação de Flamant.";
         avisoPara = "fl";
-      } else if(metodo === "hw" && Dmm > 300){
-        AVt.textContent = qual + " (" + d + ") é maior que 300 mm, fora da faixa recomendada para Hazen-Williams (50 a 300 mm). Recomenda-se a equação universal de Darcy-Weisbach.";
+      } else if(metodo === "hw" && Dmm > 3000){
+        AVt.textContent = qual + " (" + d + ") é maior que 3000 mm, fora da faixa recomendada para Hazen-Williams (50 a 3000 mm). Recomenda-se a equação universal de Darcy-Weisbach.";
         avisoPara = "dw";
       } else if(metodo === "fl" && Dmm >= 50){
         AVt.textContent = qual + " (" + d + ") não é menor que 50 mm, fora da faixa recomendada para Flamant." +
-          (Dmm <= 300 ? " Recomenda-se fazer os cálculos pela equação de Hazen-Williams." : " Recomenda-se a equação universal de Darcy-Weisbach.");
-        avisoPara = Dmm <= 300 ? "hw" : "dw";
+          (Dmm <= 3000 ? " Recomenda-se fazer os cálculos pela equação de Hazen-Williams." : " Recomenda-se a equação universal de Darcy-Weisbach.");
+        avisoPara = Dmm <= 3000 ? "hw" : "dw";
       } else { AV.hidden = true; return; }
       AVb.hidden = !avisoPara;
       if(avisoPara) AVb.textContent = "Calcular com " + MET[avisoPara].nome;
@@ -1162,7 +1162,7 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
   function avisoArmaz(){
     document.getElementById("cad-armaz").textContent = salvaOk
-      ? "As tubulações ficam salvas neste navegador, neste aparelho. Para usar em outro aparelho, exporte o cadastro e importe lá."
+      ? "As tubulações ficam salvas neste navegador, neste aparelho.\nPara usar em outro aparelho, exporte o cadastro e importe lá."
       : "Este navegador não permitiu salvar: o cadastro vale só enquanto a página estiver aberta. Use Exportar para guardá-lo.";
   }
   function avisa(t, tipo){ CM.textContent = t; CM.className = "cad-msg" + (tipo ? " " + tipo : ""); }
