@@ -272,12 +272,12 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 <div class="tabs" role="tablist">
   <button class="tab" id="tab-hw" role="tab" aria-selected="true" aria-controls="painel">
     Hazen-Williams
-    <span class="faixa">50 mm ≤ Diâmetro ≤ 3000 mm</span>
+    <span class="faixa">50 mm &lt; Diâmetro ≤ 3000 mm</span>
     <span class="eq"></span>
   </button>
   <button class="tab" id="tab-fl" role="tab" aria-selected="false" aria-controls="painel">
     Flamant
-    <span class="faixa">Diâmetro &lt; 50 mm</span>
+    <span class="faixa">Diâmetro ≤ 50 mm</span>
     <span class="eq"></span>
   </button>
   <button class="tab" id="tab-dw" role="tab" aria-selected="false" aria-controls="painel">
@@ -812,14 +812,14 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     if(Dmm !== null && isFinite(Dmm) && Dmm > 0){
       var qual = calculado ? "O diâmetro calculado" : "O diâmetro informado";
       var d = fmt(Dmm, 2) + " mm";
-      if(metodo === "hw" && Dmm < 50){
-        AVt.textContent = qual + " (" + d + ") é menor que 50 mm, fora da faixa recomendada para Hazen-Williams. Recomenda-se fazer os cálculos pela equação de Flamant.";
+      if(metodo === "hw" && Dmm <= 50){
+        AVt.textContent = qual + " (" + d + ") é menor ou igual a 50 mm, fora da faixa recomendada para Hazen-Williams (acima de 50 até 3000 mm). Recomenda-se fazer os cálculos pela equação de Flamant.";
         avisoPara = "fl";
       } else if(metodo === "hw" && Dmm > 3000){
-        AVt.textContent = qual + " (" + d + ") é maior que 3000 mm, fora da faixa recomendada para Hazen-Williams (50 a 3000 mm). Recomenda-se a equação universal de Darcy-Weisbach.";
+        AVt.textContent = qual + " (" + d + ") é maior que 3000 mm, fora da faixa recomendada para Hazen-Williams (acima de 50 até 3000 mm). Recomenda-se a equação universal de Darcy-Weisbach.";
         avisoPara = "dw";
-      } else if(metodo === "fl" && Dmm >= 50){
-        AVt.textContent = qual + " (" + d + ") não é menor que 50 mm, fora da faixa recomendada para Flamant." +
+      } else if(metodo === "fl" && Dmm > 50){
+        AVt.textContent = qual + " (" + d + ") é maior que 50 mm, fora da faixa recomendada para Flamant (até 50 mm)." +
           (Dmm <= 3000 ? " Recomenda-se fazer os cálculos pela equação de Hazen-Williams." : " Recomenda-se a equação universal de Darcy-Weisbach.");
         avisoPara = Dmm <= 3000 ? "hw" : "dw";
       } else { AV.hidden = true; return; }
