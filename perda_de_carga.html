@@ -586,7 +586,7 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     hw:{ H: eq(ig(HF, '10,65' + QC + sp + fr('L','D<sup>4,87</sup>'))) },
     fl:{ H: eq(ig(HF, '6,107 · b · ' + fr('L · Q<sup>1,75</sup>','D<sup>4,75</sup>'))) },
     dw:{ H: eq(ig(HF, 'f · ' + fr('L','D') + sp + '· ' + fr('V<sup>2</sup>','2g'))),
-         CW: eq(ig(fr('1','√f'), '−2 · log' + par(fr('ε','3,7 · D') + '<span class="op">+</span>' + fr('2,51','Re · √f')))) }
+         CW: eq(ig(fr('1','√f'), '−2 · log' + par(fr('2,51','Re · √f') + '<span class="op">+</span>' + '0,27 · ' + fr('ε','D')))) }
   };
   // as abas mostram a equação principal de cada método
   document.querySelector("#tab-hw .eq").innerHTML = ISO.hw.H;
@@ -619,10 +619,10 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     }
     return NaN;
   }
-  // 1/√f = −2 log(ε/(3,7D) + 2,51/(Re √f)), resolvida em x = 1/√f pelo método de Newton,
+  // 1/√f = −2 log(2,51/(Re √f) + 0,27 ε/D), resolvida em x = 1/√f pelo método de Newton,
   // partindo da aproximação explícita de Swamee-Jain
   function colebrook(Re, er){
-    var a = er/3.7, b = 2.51/Re;
+    var a = 0.27*er, b = 2.51/Re;
     var x = -2*Math.log10(a + 5.74/Math.pow(Re, 0.9)), it;
     for(it = 1; it <= 50; it++){
       var s = a + b*x;
@@ -670,7 +670,7 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
           return NaN;
         }
         f = v.H*2*g*v.D/(v.L*V*V); x = 1/Math.sqrt(f);
-        er = 3.7*(Math.pow(10, -x/2) - 2.51*x/Re);   // Colebrook-White isolada para ε/D
+        er = (Math.pow(10, -x/2) - 2.51*x/Re)/0.27;   // Colebrook-White isolada para ε/D
         if(!(er > 0)){
           erroDW = "A perda de carga informada é menor que a de um tubo hidraulicamente liso (ε = 0) com esses dados; nenhuma rugosidade produz esse valor.";
           return NaN;
