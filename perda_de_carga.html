@@ -82,8 +82,8 @@ select.mat:focus{outline:2px solid var(--water);outline-offset:-1px;border-color
 .field.mat-field{grid-column:1/-1}
 .grid.saidas{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));margin-top:18px;padding-top:18px;border-top:1px dashed var(--line)}
 .saidas .field:not(.unknown) input{background:transparent;border-style:dashed;color:var(--ink-soft)}
-button.esc .atual{color:var(--ink-soft);font-size:.82em;margin-left:4px}
-button.esc:hover .atual{color:var(--surface)}
+select.mat:disabled{opacity:.55;cursor:default}
+.field.unknown input:disabled{opacity:1;cursor:not-allowed}
 @media (min-width:860px){.field.mat-field{grid-column:span 2}}
 .field input[readonly]{cursor:default}
 .field.unknown input::placeholder{color:var(--solve);opacity:1}
@@ -123,18 +123,19 @@ input:focus{outline:2px solid var(--water);outline-offset:-1px;border-color:var(
 .derived div{min-width:96px}
 .nota{margin-top:12px;font-size:.84rem;color:var(--solve);line-height:1.45}
 
-.escolha{margin:18px 0 0;padding:14px 16px;border:1px solid var(--solve);border-left:4px solid var(--solve);
+/* ---- seletor da variável a calcular (mesmo padrão do app de canais) ---- */
+.inc-linha{margin:0 0 16px;padding:12px 14px;border:1px solid var(--solve);border-left:4px solid var(--solve);
   background:var(--solve-bg);border-radius:3px}
-.escolha p{margin:0 0 2px;font-size:.9rem}
-.escolha .esc-tit{font-weight:600}
-.esc-ops{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-button.esc{font:500 .9rem/1.2 inherit;font-family:inherit;cursor:pointer;padding:9px 13px;
-  border:1px solid var(--solve);background:var(--surface);color:var(--ink);border-radius:2px}
-button.esc .sym{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--solve);margin-right:6px}
-button.esc:hover{background:var(--solve);color:var(--surface)}
-button.esc:hover .sym{color:var(--surface)}
-button.esc.desfaz{border-color:var(--line);color:var(--ink-soft)}
-button.esc.desfaz:hover{background:transparent;border-color:var(--ink-soft);color:var(--ink)}
+.inc-linha .rot{display:block;font-size:.85rem;font-weight:600;margin-bottom:8px}
+.inc-linha .rot .un{color:var(--ink-soft);font-weight:400;font-size:.78rem;margin-left:6px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:500 .86rem/1.2 inherit;font-family:inherit;cursor:pointer;padding:8px 12px;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:2px}
+.seg button .sym{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--solve);margin-right:6px}
+.seg button:hover{border-color:var(--solve)}
+.seg button:focus-visible{outline:2px solid var(--water);outline-offset:2px}
+.seg button[aria-pressed="true"]{background:var(--solve);border-color:var(--solve);color:var(--surface)}
+.seg button[aria-pressed="true"] .sym{color:var(--surface)}
 .aviso-faixa{margin:18px 0 0;padding:12px 14px;border:1px solid var(--alert);border-left:4px solid var(--alert);
   border-radius:3px;background:var(--surface);font-size:.88rem;line-height:1.5;color:var(--alert);
   display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
@@ -144,7 +145,6 @@ button.esc.desfaz:hover{background:transparent;border-color:var(--ink-soft);colo
   border:1px solid var(--alert);background:var(--surface);color:var(--alert);border-radius:2px}
 .aviso-faixa button:hover{background:var(--alert);color:var(--surface)}
 .aviso-faixa button:focus-visible{outline:2px solid var(--water);outline-offset:2px}
-button.esc:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
 button.act{
   font:500 .9rem/1 inherit;font-family:inherit;cursor:pointer;padding:10px 15px;
@@ -297,7 +297,11 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
         <button class="act" id="btn-limpa" title="Apaga todos os campos para começar outro cálculo">Novo cálculo</button>
       </div>
     </div>
-    <p class="hint">Deixe em branco apenas um campo: a variável a calcular. Depois do resultado, ao alterar qualquer valor você escolhe qual variável deve ser recalculada.</p>
+    <p class="hint">Escolha a variável a calcular (campo em laranja) e preencha as demais. Ao alterar qualquer valor, a mesma variável é recalculada; para calcular outra, clique nela na barra abaixo ou apague o campo dela.</p>
+    <div class="inc-linha">
+      <span class="rot" id="rot-inc">Variável a calcular <span class="un">incógnita</span></span>
+      <div class="seg" id="seg-inc" role="group" aria-labelledby="rot-inc"></div>
+    </div>
     <div class="info-dw" id="info-dw" hidden>
       <span class="rot">Fator de atrito f: Colebrook-White (1939), resolvida por iteração de Newton</span>
       <div class="cw" id="eq-cw"></div>
@@ -367,11 +371,6 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     <div class="aviso-faixa" id="aviso-faixa" hidden aria-live="polite">
       <span id="aviso-txt"></span>
       <button type="button" id="aviso-btn"></button>
-    </div>
-    <div class="escolha" id="escolha" hidden aria-live="polite">
-      <p class="esc-tit" id="esc-tit"></p>
-      <p id="esc-sub">Qual variável deve ser recalculada com o novo valor?</p>
-      <div class="esc-ops" id="esc-ops"></div>
     </div>
     <div class="result empty" id="resultado" aria-live="polite">
       <p class="msg" id="msg"></p>
@@ -540,7 +539,7 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   function vFmt(x){ return String(x).replace(".", ","); }
   function montaSel(){
     var M = MET[metodo];
-    SEL.innerHTML = '<option value="">Outro valor (digite abaixo) ou deixe em branco para calcular</option>' +
+    SEL.innerHTML = '<option value="">Outro valor (digite abaixo)</option>' +
       MAT[metodo].map(function(m, i){
         return '<option value="'+i+'">'+m[0]+' — '+M.sym+' = '+vFmt(m[1])+(metodo === "dw" ? " mm" : "")+'</option>';
       }).join("");
@@ -692,12 +691,10 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       case "R": return MET[metodo].rug(v.Q, v.L, v.D, v.H);
     }
   }
-  // ---- alteração de um valor: o usuário escolhe o que recalcular ----
-  var calcAnt = [];    // variável calculada no último resultado
-  var ultimo = null;   // {inc, val}: incógnita do último resultado e seu valor (unidades de exibição)
-  var rawAnt = {};     // texto de cada campo no último resultado
-  var pend = null;     // {k, inc, snap, orig}: alteração aguardando a escolha
-  var ESC = document.getElementById("escolha");
+  // ---- variável a calcular: escolhida na barra, como no app de canais ----
+  var inc = "H";       // incógnita atual
+  var ultimoOk = null; // {inc, val}: último resultado válido (unidades de exibição)
+  var SEGI = document.getElementById("seg-inc");
   var SIMB = {Q:"Q", D:"D", L:"L", H:"hf"};
   function simbVar(k){ return k === "R" ? MET[metodo].sym : SIMB[k]; }
   function nomeR(){ return metodo === "dw" ? "rugosidade ε" : "coeficiente " + MET[metodo].sym; }
@@ -705,59 +702,55 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     return {Q:"a vazão", D:"o diâmetro", L:"o comprimento", H:"a perda de carga",
             R:(metodo === "dw" ? "a " : "o ") + nomeR()}[k];
   }
-  var NOVO = {
-    Q:function(){ return "Nova vazão"; },
-    D:function(){ return "Novo diâmetro"; }, L:function(){ return "Novo comprimento"; },
-    R:function(){ return metodo === "dw" ? "Nova rugosidade ε" : "Novo coeficiente " + MET[metodo].sym; },
-    H:function(){ return "Nova perda de carga"; }
-  };
+  var ROT_INC = {Q:"Vazão", D:"Diâmetro", L:"Comprimento", H:"Perda de carga"};
   function numStr(x){ return String(Number(x.toPrecision(6))); }
   function vazio(k){ return EL[k].value.trim() === ""; }
 
-  function mostraEscolha(){
-    var k = pend.k, eraCalc = (k === pend.inc);
-    if(eraCalc){
-      var f = EL[k].closest(".field");
-      f.classList.remove("unknown","calc");
-      var b = f.querySelector(".badge"); if(b) b.remove();
-    }
-    caixa.style.display = "none";
-    ESC.hidden = false;
-    var fem = (k === "Q" || k === "H" || (k === "R" && metodo === "dw"));
-    document.getElementById("esc-tit").textContent = "Você alterou " + artVar(k) +
-      (eraCalc ? (fem ? ", que tinha sido calculada." : ", que tinha sido calculado.") : ".");
-    var cand = vazio(k) ? [] : ORDEM.filter(function(c){ return c !== k; });
-    if(!eraCalc) cand.sort(function(a, b){ return (b === pend.inc) - (a === pend.inc); });
-    document.getElementById("esc-sub").textContent = cand.length
-      ? "Qual variável deve ser recalculada com o novo valor?"
-      : "Digite o novo valor ou desfaça a alteração.";
-    document.getElementById("esc-ops").innerHTML = cand.map(function(c){
-      return '<button type="button" class="esc" data-k="'+c+'"><span class="sym">'+simbVar(c)+'</span>'+NOVO[c]()+
-        (c === pend.inc ? '<span class="atual">(atual)</span>' : '') + '</button>';
-    }).join("") + '<button type="button" class="esc desfaz" data-k="">Desfazer alteração</button>';
+  function montaInc(){
+    SEGI.innerHTML = ORDEM.map(function(k){
+      var rot = k === "R" ? (metodo === "dw" ? "Rugosidade" : "Coeficiente") : ROT_INC[k];
+      return '<button type="button" data-k="'+k+'" aria-pressed="'+(k === inc)+'"><span class="sym">'+simbVar(k)+'</span>'+rot+'</button>';
+    }).join("");
   }
-  document.getElementById("esc-ops").addEventListener("click", function(e){
-    var bt = e.target.closest("button"); if(!bt || !pend) return;
-    var c = bt.dataset.k;
-    if(!c) EL[pend.k].value = pend.orig;                 // desfazer
-    else if(c !== pend.inc){
-      if(pend.inc !== pend.k) EL[pend.inc].value = numStr(pend.snap);  // a antiga incógnita fica fixa
-      EL[c].value = "";                                  // a escolhida vira a nova incógnita
-    }
-    pend = null;
+  // marca a incógnita na barra e nos campos (laranja, bloqueado, selo "incógnita")
+  function marcaInc(){
+    Array.prototype.forEach.call(SEGI.querySelectorAll("button"), function(b){
+      b.setAttribute("aria-pressed", String(b.dataset.k === inc));
+    });
+    ORDEM.forEach(function(k){
+      var f = EL[k].closest(".field"), isInc = (k === inc), b = f.querySelector(".badge");
+      f.classList.toggle("unknown", isInc);
+      f.classList.remove("calc");
+      EL[k].disabled = isInc;
+      if(isInc) EL[k].value = "";
+      EL[k].placeholder = isInc ? "incógnita" : "—";
+      if(isInc && !b){ b = document.createElement("span"); b.className = "badge"; f.appendChild(b); }
+      else if(!isInc && b) b.remove();
+      if(isInc){ b.textContent = "incógnita"; b.style.top = (EL[k].offsetTop + EL[k].offsetHeight/2) + "px"; }
+    });
+    SEL.disabled = (inc === "R");
+  }
+  // troca a incógnita: a anterior fica fixa com o último valor calculado
+  function escolheInc(k){
+    if(k === inc) return;
+    if(ultimoOk && ultimoOk.inc === inc) EL[inc].value = numStr(ultimoOk.val);
+    inc = k;
+    EL[k].value = "";
+    ultimoOk = null;
     calcula();
+  }
+  SEGI.addEventListener("click", function(e){
+    var bt = e.target.closest("button"); if(bt) escolheInc(bt.dataset.k);
   });
-  // só é "alteração" quando o resultado já existia ao entrar no campo;
-  // enquanto o usuário ainda digita o último dado, apenas recalcula
-  var haviaResultado = false;
-  function aoFocar(){ haviaResultado = !!ultimo; }
-  function aoDigitar(k){
+  // atalho: apagar um campo (e sair dele) com todos os outros preenchidos faz dele a incógnita
+  function aoSair(k){
     return function(){
-      if(pend === null && ultimo && haviaResultado)
-        pend = {k:k, inc:ultimo.inc, snap:ultimo.val, orig: rawAnt[k] || ""};
-      calcula();
+      if(k === inc || !vazio(k)) return;
+      var outros = ORDEM.filter(function(c){ return c !== k && c !== inc && vazio(c); });
+      if(!outros.length) escolheInc(k);
     };
   }
+  function aoDigitar(){ calcula(); }
 
   // saídas calculadas (não editáveis): V, J e, em Darcy-Weisbach, Re e f
   function saida(k, val, dec){
@@ -837,40 +830,18 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
   function calcula(){
     sincSel(); sincTubo();
-    if(pend){
-      var outros = ORDEM.filter(function(c){ return c !== pend.k && c !== pend.inc && vazio(c); });
-      if(pend.k === pend.inc && vazio(pend.k)) pend = null;          // apagou: volta a ser calculada
-      else if(outros.length === 1 && !vazio(pend.k)){                // apagou outro campo: ele vira a incógnita
-        if(pend.inc !== pend.k) EL[pend.inc].value = numStr(pend.snap);
-        pend = null;
-      }
-      else if(outros.length > 1) pend = null;
-      else { mostraEscolha(); return; }
-    }
-    ESC.hidden = true;
-    calcAnt = []; ultimo = null;
-    var vazios = [], vals = {}, invalido = null;
+    marcaInc();
+    var faltam = [], vals = {}, invalido = null;
     ORDEM.forEach(function(k){
+      if(k === inc) return;                           // a incógnita não é lida
       var x = num(EL[k]);
-      if(x === null) vazios.push(k);
+      if(x === null) faltam.push(k);
       else if(isNaN(x)) invalido = k;
       else vals[k] = x;
     });
 
     saida("V", null); saida("J", null); saida("Re", null); saida("f", null); descDW(null); faixa(null);
     caixa.style.display = "";
-    Array.prototype.forEach.call(campos.querySelectorAll(".field"), function(f){
-      var k = f.dataset.k;
-      if(ORDEM.indexOf(k) < 0) return;                  // temperatura: dado auxiliar, nunca incógnita
-      var isInc = vazios.length === 1 && vazios[0] === k;
-      f.classList.toggle("unknown", isInc);
-      f.classList.remove("calc");
-      EL[k].placeholder = "—";
-      var b = f.querySelector(".badge");
-      if(isInc && !b){ b = document.createElement("span"); b.className="badge"; f.appendChild(b); }
-      else if(!isInc && b) b.remove();
-      if(isInc){ var inp = EL[k]; b.textContent = "incógnita"; b.style.top = (inp.offsetTop + inp.offsetHeight/2) + "px"; }
-    });
 
     var nu = null;
     if(metodo === "dw"){ nu = viscosidade(num(TEMP)); mostraNu(nu); }
@@ -893,13 +864,14 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       falha("Informe a temperatura da água entre 0 e 100 °C: ela define a viscosidade cinemática.");
       return;
     }
-    if(vazios.length === ORDEM.length){
+    if(faltam.length === ORDEM.length - 1){
       neutro(""); caixa.style.display = "none";
       return;
     }
-    if(vazios.length > 1){
-      neutro("Deixe em branco apenas um campo, a variável a calcular. Agora há " + vazios.length + ": " +
-             vazios.map(function(k){ return k === "R" ? nomeR() : META[k].nome.toLowerCase(); }).join(", ") + ".");
+    if(faltam.length){
+      var nomes = faltam.map(function(k){ return artVar(k); });
+      var lista = nomes.length > 1 ? nomes.slice(0, -1).join(", ") + " e " + nomes[nomes.length-1] : nomes[0];
+      neutro("Para calcular " + artVar(inc) + ", informe " + lista + ". Para calcular outra variável, escolha-a na barra \u201cVariável a calcular\u201d.");
       return;
     }
 
@@ -910,32 +882,22 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
       L: vals.L, R: vals.R, H: vals.H, nu: nu
     };
 
-    var resolvidas = [];
     erroDW = null;
-    if(vazios.length === 1){
-      v[vazios[0]] = eqPerda(vazios[0], v);
-      resolvidas.push(vazios[0]);
-    }
+    v[inc] = eqPerda(inc, v);
     v.V = velocidade(v.Q, v.D);
 
     var falhou = ORDEM.concat("V").find(function(k){ return !isFinite(v[k]) || naoPositivo(k, v[k]); });
     if(falhou){ falha(erroDW || "O resultado não é fisicamente válido. Revise os dados de entrada."); return; }
 
-    // verificação: todos os campos preenchidos
     var checks = [];
-    if(vazios.length === 0){
-      var hc = eqPerda("H", v), dH = v.H - hc;
-      checks.push(Math.abs(dH) > 1e-3*Math.max(1, v.H)
-        ? "A perda informada não bate com a calculada, " + fmt(hc,3) + " m (diferença de " + fmt(dH,3) + " m)."
-        : "Confere: a perda calculada é " + fmt(hc,3) + " m, diferença de " + fmt(dH,4) + " m.");
-    } else if(metodo === "dw" && vazios[0] !== "H"){
+    if(metodo === "dw" && inc !== "H"){
       // Q ou D resolvidos por bissecção: o salto de f entre laminar e turbulento pode impedir a solução exata
       var hv = eqPerda("H", v);
       if(Math.abs(hv - v.H) > 1e-3*v.H)
         checks.push("Não há solução exata: a perda informada cai no salto do fator de atrito entre os regimes laminar e turbulento (Re ≈ 2300). O valor mostrado é o limite entre os dois regimes.");
     }
 
-    acerta(resolvidas, v, [], checks, vazios.length === 0);
+    acerta([inc], v, [], checks, false);
   }
 
   function neutro(t){ caixa.className = "result empty"; ok.hidden = true; msg.hidden = false; msg.textContent = t; }
@@ -953,7 +915,6 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
 
     var unicas = [];
     ORDEM.forEach(function(k){ if(resolvidas.indexOf(k) >= 0 && unicas.indexOf(k) < 0) unicas.push(k); });
-    calcAnt = unicas.slice();
 
     // mostra o valor calculado dentro do próprio campo da incógnita
     unicas.forEach(function(k){
@@ -979,10 +940,7 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     saida("J", v.H/v.L, 5);
     saida("V", v.V, 3);
     faixa(v.D*1000, resolvidas.indexOf("D") >= 0);
-    if(unicas.length === 1){
-      ultimo = {inc: unicas[0], val: exibe(unicas[0], v).val};
-      rawAnt = {}; ORDEM.forEach(function(k){ rawAnt[k] = EL[k].value; });
-    }
+    if(unicas.length === 1) ultimoOk = {inc: unicas[0], val: exibe(unicas[0], v).val};
 
     var notas = checks.slice();
     if(metodo === "dw"){
@@ -1023,7 +981,8 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     // a tubulação escolhida continua e preenche o coeficiente do novo método
     ORDEM.forEach(function(k){ EL[k].value = ""; });
     SEL.value = "";
-    pend = null; ultimo = null;
+    ultimoOk = null;
+    montaInc();
     if(SELT.value) aplicaTubo(SELT.value); else calcula();
   }
 
@@ -1031,10 +990,9 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   document.getElementById("tab-fl").addEventListener("click", function(){ trocaMetodo("fl"); });
   document.getElementById("tab-dw").addEventListener("click", function(){ trocaMetodo("dw"); });
   ORDEM.forEach(function(k){
-    EL[k].addEventListener("input", aoDigitar(k));
-    EL[k].addEventListener("focus", aoFocar);
+    EL[k].addEventListener("input", aoDigitar);
+    EL[k].addEventListener("change", aoSair(k));
   });
-  SEL.addEventListener("focus", aoFocar);
   TEMP.addEventListener("input", function(){ calcula(); });   // muda ν e recalcula a mesma incógnita
   window.addEventListener("resize", function(){
     Array.prototype.forEach.call(document.querySelectorAll("#painel .field .badge"), function(b){
@@ -1046,9 +1004,9 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   document.getElementById("btn-limpa").addEventListener("click", function(){
     ORDEM.forEach(function(k){ EL[k].value = ""; });
     SELT.value = "";
-    pend = null; ultimo = null;
+    ultimoOk = null;
     calcula();
-    EL.Q.focus();
+    (inc === "Q" ? EL.D : EL.Q).focus();
   });
 
   // ---- cadastro de tubulações (guardado neste navegador) --------------
@@ -1122,11 +1080,12 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   function aplicaTubo(id){
     var t = acha(id); if(!t) return;
     SELT.value = id;
-    EL.D.value = numStr(t.di);
     var c = coefTubo(t);
+    // a tubulação define D e o coeficiente: se um deles era a incógnita, passa a calcular a perda de carga
+    if(inc === "D" || (inc === "R" && c !== null)) inc = "H";
+    EL.D.value = numStr(t.di);
     if(c !== null) EL.R.value = numStr(c);
-    // dados novos de tubulação: começa um cálculo novo com as demais variáveis mantidas
-    pend = null; ultimo = null; haviaResultado = false;
+    ultimoOk = null;
     calcula();
   }
   function sincTubo(){                              // desmarca se D ou o coeficiente forem alterados à mão
@@ -1316,7 +1275,7 @@ button.mini:focus-visible{outline:2px solid var(--water);outline-offset:2px}
     rd.readAsText(f);
   });
 
-  montaSel();
+  montaSel(); montaInc();
   montaTubos();
   calcula();
 })();
