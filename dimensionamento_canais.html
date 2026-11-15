@@ -150,7 +150,7 @@ button.act.calc{padding:12px 26px;font-size:.98rem}
 .par-lay{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:22px;align-items:start}
 @media (max-width:780px){.par-lay{grid-template-columns:1fr}.par-desenho{order:-1}}
 .par-desenho{position:sticky;top:12px}
-.par-campos,.par-desenho,.talude-lay>*{min-width:0}
+.par-campos,.par-desenho{min-width:0}
 .vel p{overflow-wrap:anywhere}
 .desenho{border:1px solid var(--line);border-radius:2px;background:var(--paper);padding:6px}
 .desenho svg{display:block;width:100%;height:auto}
@@ -168,19 +168,6 @@ button.act.calc{padding:12px 26px;font-size:.98rem}
 .geo-op .sec-svg text{font-size:15px;font-weight:600;fill:var(--ink-soft)}
 
 /* ---- talude λ ---- */
-.talude-lay{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:16px;align-items:start}
-@media (max-width:560px){.talude-lay{grid-template-columns:1fr}}
-details.fig-lam{border:1px solid var(--line);border-left:4px solid var(--water);border-radius:2px;background:var(--paper);padding:10px 12px}
-details.fig-lam>summary{cursor:pointer;font-size:.84rem;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:8px}
-details.fig-lam>summary::-webkit-details-marker{display:none}
-details.fig-lam>summary .seta{color:var(--ink-soft);transition:transform .15s}
-details.fig-lam:not([open])>summary .seta{transform:rotate(-90deg)}
-details.fig-lam svg{display:block;width:100%;max-width:340px;height:auto;margin:8px 0 4px}
-.fig-lam .fig-eq{font-family:"IBM Plex Mono",monospace;font-size:.8rem;line-height:1.6;color:var(--ink)}
-.fig-lam .fig-eq span{display:block}
-.fig-lam .fig-at{font-size:.76rem;color:var(--ink-soft);margin-top:6px;line-height:1.4}
-.fig-svg text{font-family:"IBM Plex Mono",monospace;font-size:12px;fill:var(--ink)}
-.fig-svg .leg{font-family:"IBM Plex Sans",sans-serif;font-size:10.5px;fill:var(--ink-soft)}
 
 /* ---- equações (padrão do aplicativo de uniformidade) ---- */
 details.equacoes>summary{cursor:pointer;list-style:none;margin-bottom:0}
@@ -389,19 +376,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
               <button type="button" data-v="ang" aria-pressed="false"><span class="sym">θ</span>Ângulo (°)</button>
             </div>
           </div>
-          <div class="talude-lay">
-            <div id="campo-talude"></div>
-            <details class="fig-lam" id="fig-lam" open>
-              <summary>Talude λ: projeções e ângulo <span class="seta" aria-hidden="true">▾</span></summary>
-              <div id="fig-lam-svg"></div>
-              <div class="fig-eq">
-                <span>λ = H / V = cotg θ   (talude λ:1)</span>
-                <span>i = 100 · V / H = 100 / λ   (%)</span>
-                <span>θ = arctg (1 / λ)</span>
-              </div>
-              <div class="fig-at" id="fig-lam-at"></div>
-            </details>
-          </div>
+          <div id="campo-talude"></div>
         </div>
 
         <div class="bloco-campos">
@@ -431,7 +406,7 @@ button.ghost:focus-visible{outline:2px solid var(--water);outline-offset:2px}
   <span class="rot">Desenvolvido na disciplina de Hidráulica Aplicada - LEB5024 / 2026.2</span>
   Alunos: Iêdo Peroba de Oliveira Teodoro; Olavo Pimentel Silva; Danrley de Abreu dos Santos e Juliano Jorge Valentim
   <span class="orient">Sob orientação do Prof. Dr. Fernando Campos Mendonça</span>
-  <span class="versao">Dimensionamento de canais · versão 1.0 — novembro de 2026</span>
+  <span class="versao">Dimensionamento de canais · versão 1.6 — novembro de 2026</span>
 </div>
 
 </div>
@@ -499,7 +474,7 @@ var Canais = (function(){
     return null;
   }
 
-  /* ---------- funções geométricas: S (área), P (perímetro), T (largura superficial) ---------- */
+  /* ---------- funções geométricas: S (área), P (perímetro), B (largura superficial) ---------- */
   var GEOMETRIA = {
     ret: function(p){ return {S:p.b*p.h, P:p.b + 2*p.h, T:p.b}; },
     trap: function(p){
@@ -869,12 +844,12 @@ if(typeof window !== "undefined") window.Canais = Canais;
         sv += '<line class="ext" x1="' + X(d.b/2) + '" y1="' + ys2 + '" x2="' + X(d.b/2) + '" y2="' + (yt - 4) + '"/>';
         sv += cotaH(X(-d.b/2), X(d.b/2), yt, rot("b", "b", d.b, "m"), "b", true);
       }
-      // largura superficial T (resultado) nas seções com talude
-      if(!mini && val && (sec === "trap" || sec === "tri")){
-        var ytt = Y(Hc) - 14;
+      // largura superficial B (base superior) nas seções com talude
+      if(sec === "trap" || sec === "tri"){
+        var ytt = Y(Hc) - (mini ? 6 : 14);
         sv += '<line class="ext" x1="' + X(e0[0]) + '" y1="' + ys2 + '" x2="' + X(e0[0]) + '" y2="' + (ytt - 4) + '"/>';
         sv += '<line class="ext" x1="' + X(e1[0]) + '" y1="' + ys2 + '" x2="' + X(e1[0]) + '" y2="' + (ytt - 4) + '"/>';
-        sv += cotaH(X(e0[0]), X(e1[0]), ytt, rot("T", "T", e1[0] - e0[0], "m"), "T", true);
+        sv += cotaH(X(e0[0]), X(e1[0]), ytt, rot("B", "B", e1[0] - e0[0], "m"), "B", true);
       }
       // triângulo do talude (cateto vertical 1, horizontal λ), como na tabela de características dos canais
       if((sec === "trap" || sec === "tri") && d.L > 0){
@@ -889,34 +864,6 @@ if(typeof window !== "undefined") window.Canais = Canais;
     }
     sv += '</svg>';
     return {svg:sv, ex:ex};
-  }
-
-  /* ---------- figura do talude λ ---------- */
-  function figLambda(lam){
-    var Vp = 64, lamD = (isFinite(lam) && lam > 0) ? Math.max(0.2, Math.min(3.2, lam)) : 1.5;
-    var Hp = lamD*Vp, Ax = 46, Ay = 128, Bx = Ax + Hp, Cy = Ay - Vp;
-    var len = Math.sqrt(Hp*Hp + Vp*Vp), ux = Hp/len, uy = -Vp/len, Ex = Ax + ux*(len + 26), Ey = Ay + uy*(len + 26);
-    var nx = Vp/len, ny = Hp/len, wl = Cy + 12, xw = Ax + Hp*(Ay - wl)/Vp;
-    var th = Math.atan2(Vp, Hp), r = 26;
-    var s = '<svg class="fig-svg" viewBox="0 0 ' + Math.max(300, Ex + 40) + ' 176" role="img" aria-label="Talude: projeção horizontal λ para projeção vertical 1, ângulo θ com a horizontal">';
-    s += '<defs><pattern id="hach" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#9FB6BC" stroke-width="1.6"/></pattern></defs>';
-    s += '<polygon points="8,' + wl + ' ' + xw + ',' + wl + ' ' + Ax + ',' + Ay + ' 8,' + Ay + '" fill="rgba(15,124,152,.18)"/>';
-    s += '<line x1="8" y1="' + wl + '" x2="' + xw + '" y2="' + wl + '" stroke="#0F7C98" stroke-width="1.6"/>';
-    s += '<rect x="8" y="' + Ay + '" width="' + (Ax - 8) + '" height="9" fill="url(#hach)"/>';
-    s += '<polygon points="' + Ax + ',' + Ay + ' ' + Ex + ',' + Ey + ' ' + (Ex + nx*9) + ',' + (Ey + ny*9) + ' ' + (Ax + nx*9) + ',' + (Ay + ny*9) + ' ' + Ax + ',' + (Ay + 9) + '" fill="url(#hach)"/>';
-    s += '<polyline points="8,' + Ay + ' ' + Ax + ',' + Ay + ' ' + Ex + ',' + Ey + '" fill="none" stroke="#0E2A33" stroke-width="2.4" stroke-linejoin="round"/>';
-    s += '<line x1="' + Ax + '" y1="' + Ay + '" x2="' + Bx + '" y2="' + Ay + '" stroke="#0A5A70" stroke-width="1.4" stroke-dasharray="5 3"/>';
-    s += '<line x1="' + Bx + '" y1="' + Ay + '" x2="' + Bx + '" y2="' + Cy + '" stroke="#0A5A70" stroke-width="1.4" stroke-dasharray="5 3"/>';
-    s += '<polyline points="' + (Bx - 9) + ',' + Ay + ' ' + (Bx - 9) + ',' + (Ay - 9) + ' ' + Bx + ',' + (Ay - 9) + '" fill="none" stroke="#0A5A70" stroke-width="1"/>';
-    s += '<path d="M' + (Ax + r) + ' ' + Ay + ' A' + r + ' ' + r + ' 0 0 0 ' + (Ax + r*Math.cos(th)) + ' ' + (Ay - r*Math.sin(th)) + '" fill="none" stroke="#B4611A" stroke-width="1.4"/>';
-    s += '<text x="' + (Ax + (r + 9)*Math.cos(th/2)) + '" y="' + (Ay - (r + 9)*Math.sin(th/2) + 4) + '" fill="#B4611A" font-weight="600">θ</text>';
-    s += '<text x="' + ((Ax + Bx)/2) + '" y="' + (Ay + 24) + '" text-anchor="middle" font-weight="600">λ</text>';
-    s += '<text class="leg" x="' + ((Ax + Bx)/2) + '" y="' + (Ay + 38) + '" text-anchor="middle">projeção horizontal (H)</text>';
-    s += '<text x="' + (Bx + 7) + '" y="' + ((Ay + Cy)/2 + 1) + '" font-weight="600">1</text>';
-    s += '<text class="leg" x="' + (Bx + 7) + '" y="' + ((Ay + Cy)/2 + 15) + '">projeção vertical (V)</text>';
-    s += '<text class="leg" x="12" y="' + (wl - 6) + '">água</text>';
-    s += '</svg>';
-    return s;
   }
 
   /* ---------- seleção da geometria ---------- */
@@ -934,7 +881,7 @@ if(typeof window !== "undefined") window.Canais = Canais;
   function selecionaGeo(sec){
     var mudou = est.sec !== sec;
     est.sec = sec;
-    if(!est.iniciado[sec]){ carregaExemplo(sec); est.iniciado[sec] = true; }
+    if(!est.iniciado[sec]){ est.vals[sec] = {Iun:"m/m", Lrep:"hv", Qun:"m³/s"}; est.iniciado[sec] = true; }   // começa com os campos vazios
     sincMat();
     if(mudou){ est.ativo = false; est.solIdx = 0; }
     Array.prototype.forEach.call($("geo-grade").querySelectorAll(".geo-op"), function(b){
@@ -1117,7 +1064,6 @@ if(typeof window !== "undefined") window.Canais = Canais;
         if(er) dL.textContent = er;
         else { var lam = C.lambdaDe(vl, U().Lrep); dL.textContent = descLambda(lam); }
       }
-      atualizaFigLam();
     }
     // lâmina na seção circular
     var dP = $("d-prof");
@@ -1137,19 +1083,6 @@ if(typeof window !== "undefined") window.Canais = Canais;
   }
   function descLambda(lam){
     return "λ = " + fmt(lam, 4) + " → talude " + fmt(lam, 4) + ":1 · i = " + (lam === 0 ? "∞ (vertical)" : fmt(100/lam, 3) + " %") + " · θ = " + fmt(C.lambdaPara(lam, "ang"), 3) + "°";
-  }
-  function lambdaAtual(){
-    if(est.ultimo && est.ultimo.c.sec === est.sec && est.ultimo.p.L !== undefined && incAtual() === "L") return est.ultimo.p.L;
-    var v = num(V_("L"));
-    if(v === null || isNaN(v) || C.validaTalude(v, U().Lrep, true)) return NaN;
-    return C.lambdaDe(v, U().Lrep);
-  }
-  function atualizaFigLam(){
-    var lam = lambdaAtual();
-    $("fig-lam-svg").innerHTML = figLambda(lam);
-    $("fig-lam-at").textContent = isFinite(lam)
-      ? "Valor atual: " + descLambda(lam) + (lam > 3.2 || (lam > 0 && lam < 0.2) ? ". Figura fora de escala para esse λ." : ".")
-      : "Exemplo: λ = 1,5 → talude 1,5:1 · i = 66,67 % · θ = 33,69°. Em todas as equações, λ é a relação horizontal/vertical.";
   }
 
   /* ---------- equações (MathML) ---------- */
@@ -1172,12 +1105,12 @@ if(typeof window !== "undefined") window.Canais = Canais;
     } else if(s === "trap"){
       q = BL("Área molhada", MI("S") + MO("=") + b + MO("·") + h + MO("+") + L + MO("·") + SUP(h, MN("2"))) +
           BL("Perímetro molhado", MI("P") + MO("=") + b + MO("+") + MN("2") + h + MO("·") + SQ(SUP(L, MN("2")) + MO("+") + MN("1"))) +
-          BL("Largura superficial", MI("T") + MO("=") + b + MO("+") + MN("2") + L + h, "Largura do topo, na tabela de características dos canais");
+          BL("Largura superficial", MI("B") + MO("=") + b + MO("+") + MN("2") + L + h, "Largura do topo, na tabela de características dos canais");
       leg = base + "; b, a base (m); h, a altura da lâmina (m); λ, o talude (projeção horizontal por unidade vertical, talude λ:1 = cotg θ).";
     } else if(s === "tri"){
       q = BL("Área molhada", MI("S") + MO("=") + L + MO("·") + SUP(h, MN("2"))) +
           BL("Perímetro molhado", MI("P") + MO("=") + MN("2") + h + MO("·") + SQ(MN("1") + MO("+") + SUP(L, MN("2")))) +
-          BL("Largura superficial", MI("T") + MO("=") + MN("2") + L + h);
+          BL("Largura superficial", MI("B") + MO("=") + MN("2") + L + h);
       leg = base + "; h, a altura da lâmina (m); λ, o talude de cada lado (seção simétrica, talude λ:1 = cotg θ).";
     } else if(s === "par"){
       q = BL("Área molhada", MI("S") + MO("=") + FR(MN("2"), MN("3")) + MO("·") + b + MO("·") + h) +
@@ -1359,7 +1292,6 @@ if(typeof window !== "undefined") window.Canais = Canais;
     est.ultimo = {c:c, p:p, n:n, I:I, r:r, d:d, sol:sol};
     mostraCampoCalc(est.ultimo);
     atualizaDesenho(p);
-    if(GEO[s].talude) atualizaFigLam();
     mostra(est.ultimo);
   }
 
@@ -1462,7 +1394,7 @@ if(typeof window !== "undefined") window.Canais = Canais;
     var it = item("S", "Área molhada", fmt(r.S, 4), "m²") + item("P", "Perímetro molhado", fmt(r.P, 4), "m") + item("R", "Raio hidráulico", fmt(r.R, 4), "m") +
       item("V", "Velocidade média", fmt(r.V, 4), "m/s", "", false) +
       item("Q", "Vazão", fmt(r.Q, 5), "m³/s", fmt(r.Q*1000, 3) + " L/s · " + fmt(r.Q*3600, 2) + " m³/h", !dim) +
-      item("T", "Largura superficial", fmt(r.T, 4), "m");
+      item("B", "Largura superficial", fmt(r.T, 4), "m");
     if(s === "circ"){
       it += item("θ", "Ângulo central", fmt(r.theta, 4), "rad", fmt(r.theta*180/Math.PI, 2) + "°") +
         item("h/D", "Relação", fmt(p.y, 4), "", "", k === "prof" && est.prof === "y") +
